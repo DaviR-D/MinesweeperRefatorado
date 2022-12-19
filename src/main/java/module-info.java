@@ -5,4 +5,6 @@ module com.dkupinic.minesweeper {
 
     opens com.dkupinic.minesweeper to javafx.fxml;
     exports com.dkupinic.minesweeper;
+    exports com.dkupinic.minesweeper.Controller;
+    opens com.dkupinic.minesweeper.Controller to javafx.fxml;
 }
