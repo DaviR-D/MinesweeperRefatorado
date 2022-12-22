@@ -1,19 +1,37 @@
-package com.dkupinic.minesweeper.Model.Difficulty;
+package com.dkupinic.minesweeper.Model.Board;
 
-public class DifficultyBoardSize {
+import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
+
+public class BoardSize {
+    private final int beginnerSize = 8;
     private int totalFieldsX;
     private int totalFieldsY;
-    private PossibleDifficulty currentDifficulty;
+    private Difficulty currentDifficulty;
 
-    public DifficultyBoardSize(PossibleDifficulty difficulty) {
-        if (checkValidDifficulty(difficulty)) setCurrentDifficulty(difficulty);
+    public BoardSize(Difficulty difficulty) {
+        if (checkValidDifficulty(difficulty)) {
+            setCurrentDifficulty(difficulty);
+        }
+        setFieldSizes();
     }
 
-    public PossibleDifficulty getCurrentDifficulty() {
+
+
+    public int getBeginnerSize() {
+        return beginnerSize;
+    }
+
+
+
+
+
+
+
+    public Difficulty getCurrentDifficulty() {
         return currentDifficulty;
     }
 
-    public void setCurrentDifficulty(PossibleDifficulty difficulty) {
+    public void setCurrentDifficulty(Difficulty difficulty) {
         this.currentDifficulty = difficulty;
     }
 
@@ -33,7 +51,7 @@ public class DifficultyBoardSize {
         this.totalFieldsY = totalFieldsY;
     }
 
-    private boolean checkValidDifficulty(PossibleDifficulty difficulty) {
+    private boolean checkValidDifficulty(Difficulty difficulty) {
         switch (difficulty) {
             case BEGINNER, ADVANCED, ENTHUSIAST -> {
                 return true;
@@ -43,19 +61,18 @@ public class DifficultyBoardSize {
     }
 
     private void setFieldSizes() {
-        final int beginnerSize = 8;
-        final int advancedSize = 16;
-        final int enthusiastSize = 24;
         switch (getCurrentDifficulty()) {
             case BEGINNER -> {
                 setTotalFieldsX(beginnerSize);
                 setTotalFieldsY(beginnerSize);
             }
             case ADVANCED -> {
+                int advancedSize = 16;
                 setTotalFieldsX(advancedSize);
                 setTotalFieldsY(advancedSize);
             }
             case ENTHUSIAST -> {
+                int enthusiastSize = 24;
                 setTotalFieldsX(enthusiastSize);
                 setTotalFieldsY(enthusiastSize);
             }

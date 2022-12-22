@@ -1,6 +1,6 @@
 package com.dkupinic.minesweeper.Model.Difficulty;
 
-public enum PossibleDifficulty {
+public enum Difficulty {
     BEGINNER,
     ADVANCED,
     ENTHUSIAST
