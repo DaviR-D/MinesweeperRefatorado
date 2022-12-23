@@ -21,7 +21,7 @@ public class MinesweeperController {
         Pane pane = new Pane();
         pane.setPrefSize(400,400);
         pane.setStyle("-fx-background-color: red");
-
+        mainAnchor.getChildren().add(pane);
         BoardSize boardSize = new BoardSize(Difficulty.BEGINNER);
     }
 
