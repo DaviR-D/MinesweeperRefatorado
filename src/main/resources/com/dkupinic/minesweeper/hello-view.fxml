@@ -4,18 +4,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-image: &quot;../img/bg.png&quot;;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dkupinic.minesweeper.Controller.MinesweeperController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-image: &quot;../img/bg.png&quot;;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dkupinic.minesweeper.Controller.MinesweeperController">
    <children>
-      <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/bg.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="mainAnchor" layoutX="100.0" layoutY="100.0" prefHeight="400.0" prefWidth="400.0" />
-      <ImageView fitHeight="50.0" fitWidth="400.0" layoutX="100.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="50.0" fitWidth="400.0" layoutX="200.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/title.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="mainAnchor" layoutX="200.0" layoutY="114.0" prefHeight="400.0" prefWidth="400.0" />
    </children>
 </AnchorPane>
