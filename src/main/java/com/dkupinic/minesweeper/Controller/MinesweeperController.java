@@ -1,6 +1,7 @@
 package com.dkupinic.minesweeper.Controller;
 
 import com.dkupinic.minesweeper.Model.Board.BoardBuilder;
+import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -23,14 +24,19 @@ public class MinesweeperController {
 
     @FXML
     private void onDifficultySelection() {
+        clearPane();
         BoardBuilder builder = new BoardBuilder();
         Difficulty d = Difficulty.valueOf(difficultyChoiceBox.getValue());
         builder.drawBoard(d);
     }
 
+    private void clearPane() {
+        pane.getChildren().clear();
+    }
+
     private void initBoardPane() {
         pane = new Pane();
-        pane.setPrefSize(400,400);
+        pane.setPrefSize(BoardSize.getLength(), BoardSize.getWidth());
         mainAnchor.getChildren().add(pane);
     }
 
