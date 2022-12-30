@@ -9,19 +9,20 @@ public class BoardBuilder {
     public void drawBoard() {
         BoardSize boardSize = new BoardSize(Difficulty.BEGINNER);
         Board board = new Board();
+        int columns = boardSize.getColumns();
+        int rows = boardSize.getRows();
 
-        int x = board.getLength() / boardSize.getColumns();
-        int y = board.getWidth() / boardSize.getRows();
+        // Create the fields and add them to the pane
+        Field[][] grid = new Field[columns][rows];
 
-        Field grid[][] = new Field[x][y];
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; i++) {
-                Field field = new Field(i, j, Math.random() < 0.2);
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                boolean hasMine = Math.random() < 0.2;
+                Field field = new Field(i, j, hasMine);
                 grid[i][j] = field;
                 MinesweeperController.pane.getChildren().add(field);
             }
         }
-
     }
+
 }
