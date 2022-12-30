@@ -6,9 +6,8 @@ import com.dkupinic.minesweeper.Model.Field.Field;
 
 public class BoardBuilder {
 
-    public void drawBoard() {
-        BoardSize boardSize = new BoardSize(Difficulty.BEGINNER);
-        Board board = new Board();
+    public void drawBoard(Difficulty difficulty) {
+        Board boardSize = new Board(difficulty);
         int columns = boardSize.getColumns();
         int rows = boardSize.getRows();
 
@@ -17,10 +16,12 @@ public class BoardBuilder {
 
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
+
                 boolean hasMine = Math.random() < 0.2;
-                Field field = new Field(i, j, hasMine);
+                Field field = new Field(i, j, hasMine, boardSize);
                 grid[i][j] = field;
                 MinesweeperController.pane.getChildren().add(field);
+
             }
         }
     }
