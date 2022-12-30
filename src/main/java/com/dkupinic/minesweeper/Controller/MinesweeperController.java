@@ -1,5 +1,6 @@
 package com.dkupinic.minesweeper.Controller;
 
+import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Board.BoardBuilder;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
@@ -23,7 +24,7 @@ public class MinesweeperController {
     }
 
     @FXML
-    private void onDifficultySelection() {
+    private void onDifficultySelection() throws InvalidDifficultyException {
         clearPane();
         BoardBuilder builder = new BoardBuilder();
         Difficulty d = Difficulty.valueOf(difficultyChoiceBox.getValue());
