@@ -29,7 +29,7 @@ public class Board {
         switch (getCurrentDifficulty()) {
             case BEGINNER -> setSize(8);
             case ADVANCED -> setSize(16);
-            case ENTHUSIAST -> setSize(25);
+            case ENTHUSIAST -> setSize(20);
         }
         setColumns(size);
         setRows(size);
