@@ -2,54 +2,55 @@ package com.dkupinic.minesweeper.Model.Field;
 
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 public class Field extends StackPane {
     int xCoord;
     int yCoord;
     boolean containsBomb;
-    private String text;
 
-    public Text bombCount = new Text();
     private Rectangle fieldNode;
-
     public static int FIELD_SIZE;
-    private Button myButton;
 
-    private void calcFieldSize(Board bd) {
-        FIELD_SIZE = BoardSize.getLength() / bd.getRows();
-    }
+    private Image bombImage20px;
+    private Image bombImage25px;
+    private Image bombImage50px;
+    private ImageView bomb = new ImageView();
 
     public Field(int x, int y, boolean containsBomb, Board board) {
         this.xCoord = x;
         this.yCoord = y;
         this.containsBomb = containsBomb;
-
+        initImages();
         calcFieldSize(board);
-        prepareFields();
+        prepareFields(board);
     }
 
-    private void prepareFields() {
+    private void calcFieldSize(Board bd) {
+        FIELD_SIZE = BoardSize.getLength() / bd.getRows();
+    }
+
+    private void initImages() {
+        bombImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
+        bombImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
+        bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
+    }
+
+    private void prepareFields(Board board) {
         styleFields();
         styleBombs();
-
-        getChildren().addAll(fieldNode, bombCount);
+        setCorrectImage(board);
+        getChildren().addAll(fieldNode, bomb);
         setTranslateX(xCoord * FIELD_SIZE);
         setTranslateY(yCoord * FIELD_SIZE);
-
-        if (this.containsBomb) {
-            text="x";
-        }
     }
 
     private void styleBombs() {
-        bombCount.setText(this.containsBomb ? "X" : "");
-        bombCount.setStroke(Color.DARKRED);
-        bombCount.setVisible(true); // field default not opened
+        bomb.setVisible(this.containsBomb);
     }
 
     private void styleFields() {
@@ -60,5 +61,12 @@ public class Field extends StackPane {
         fieldNode.setVisible(true);
     }
 
+    private void setCorrectImage(Board board) {
+        switch (board.getCurrentDifficulty()) {
+            case BEGINNER -> bomb.setImage(bombImage50px);
+            case ADVANCED -> bomb.setImage(bombImage25px);
+            case ENTHUSIAST -> bomb.setImage(bombImage20px);
+        }
+    }
 
 }
