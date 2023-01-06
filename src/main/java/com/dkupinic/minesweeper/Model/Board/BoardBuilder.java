@@ -23,7 +23,6 @@ public class BoardBuilder {
                 Field field = new Field(i, j, hasMine, boardSize);
                 grid[i][j] = field;
                 MinesweeperController.pane.getChildren().add(field);
-
             }
         }
     }

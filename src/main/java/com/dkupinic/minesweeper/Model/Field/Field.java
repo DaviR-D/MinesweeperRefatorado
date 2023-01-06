@@ -46,6 +46,7 @@ public class Field extends StackPane {
         getChildren().addAll(fieldNode, bomb);
         setTranslateX(xCoord * FIELD_SIZE);
         setTranslateY(yCoord * FIELD_SIZE);
+        handleOnClick();
     }
 
     private void initImages() {
@@ -77,8 +78,28 @@ public class Field extends StackPane {
         }
     }
 
-    private void onClick() {
-
+    private void handleOnClick() {
+        handleBombs();
+        handleEmpty();
     }
+
+    private void handleBombs() {
+        bomb.setOnMouseClicked(event -> {
+            System.out.println("bomb");
+            //reveal all
+            //lose
+        });
+    }
+
+    private void handleEmpty() {
+        fieldNode.setOnMouseClicked(event -> {
+            if (isEmpty) {
+                System.out.println("empty");
+                //
+            }
+            System.out.println("clicked");
+        });
+    }
+
 
 }
