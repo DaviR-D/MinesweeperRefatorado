@@ -9,22 +9,28 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Field extends StackPane {
-    int xCoord;
-    int yCoord;
-    boolean containsBomb;
+    public static int FIELD_SIZE;
+    private final int xCoord;
+    private final int yCoord;
+    private boolean isEmpty;
+    private boolean containsBomb;
 
     private Rectangle fieldNode;
-    public static int FIELD_SIZE;
 
     private Image bombImage20px;
     private Image bombImage25px;
     private Image bombImage50px;
-    private ImageView bomb = new ImageView();
+    private ImageView bomb;
 
     public Field(int x, int y, boolean containsBomb, Board board) {
         this.xCoord = x;
         this.yCoord = y;
-        this.containsBomb = containsBomb;
+        if (containsBomb) {
+            this.containsBomb = true;
+            this.isEmpty = false;
+        } else {
+            this.isEmpty = true;
+        }
         initImages();
         calcFieldSize(board);
         prepareFields(board);
@@ -34,22 +40,24 @@ public class Field extends StackPane {
         FIELD_SIZE = BoardSize.getLength() / bd.getRows();
     }
 
-    private void initImages() {
-        bombImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
-        bombImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
-        bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
-    }
-
     private void prepareFields(Board board) {
         styleFields();
-        styleBombs();
-        setCorrectImage(board);
+        prepareBombs(board);
         getChildren().addAll(fieldNode, bomb);
         setTranslateX(xCoord * FIELD_SIZE);
         setTranslateY(yCoord * FIELD_SIZE);
     }
 
-    private void styleBombs() {
+    private void initImages() {
+        bomb = new ImageView();
+        bombImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
+        bombImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
+        bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
+    }
+
+
+    private void prepareBombs(Board board) {
+        setCorrectImage(board);
         bomb.setVisible(this.containsBomb);
     }
 
@@ -67,6 +75,10 @@ public class Field extends StackPane {
             case ADVANCED -> bomb.setImage(bombImage25px);
             case ENTHUSIAST -> bomb.setImage(bombImage20px);
         }
+    }
+
+    private void onClick() {
+
     }
 
 }

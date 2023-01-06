@@ -14,12 +14,12 @@ public class BoardBuilder {
 
         // Create the fields and add them to the pane
         Field[][] grid = new Field[columns][rows];
-        double mPerc = getMinePercentage(difficulty);
+        double minePercentage = getMinePercentage(difficulty);
 
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
 
-                boolean hasMine = Math.random() < mPerc;
+                boolean hasMine = Math.random() < minePercentage;
                 Field field = new Field(i, j, hasMine, boardSize);
                 grid[i][j] = field;
                 MinesweeperController.pane.getChildren().add(field);
