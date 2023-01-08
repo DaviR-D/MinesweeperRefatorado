@@ -14,7 +14,6 @@ public class Board {
         setFieldSizes();
     }
 
-
     private boolean checkValidDifficulty(Difficulty difficulty) {
         switch (difficulty) {
             case BEGINNER, ADVANCED, ENTHUSIAST -> {
@@ -23,7 +22,6 @@ public class Board {
         }
         return false;
     }
-
 
     private void setFieldSizes() {
         switch (getCurrentDifficulty()) {
@@ -35,7 +33,7 @@ public class Board {
         setRows(size);
     }
 
-
+    //region getter setter
 
     public int getSize() {
         return size;
@@ -68,4 +66,6 @@ public class Board {
     public void setRows(int rows) {
         this.rows = rows;
     }
+
+    //endregion
 }

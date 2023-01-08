@@ -9,14 +9,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Field extends StackPane {
+
     public static int FIELD_SIZE;
     private final int xCoord;
     private final int yCoord;
-    private boolean isEmpty;
+    private final boolean isEmpty;
     private boolean containsBomb;
 
     private Rectangle fieldNode;
-
     private Image bombImage20px;
     private Image bombImage25px;
     private Image bombImage50px;
@@ -56,7 +56,6 @@ public class Field extends StackPane {
         bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
     }
 
-
     private void prepareBombs(Board board) {
         setCorrectImage(board);
         bomb.setVisible(this.containsBomb);
@@ -85,7 +84,7 @@ public class Field extends StackPane {
 
     private void handleBombs() {
         bomb.setOnMouseClicked(event -> {
-            System.out.println("bomb");
+            System.out.println("bomb " + xCoord + "," + yCoord);
             //reveal all
             //lose
         });
@@ -94,12 +93,9 @@ public class Field extends StackPane {
     private void handleEmpty() {
         fieldNode.setOnMouseClicked(event -> {
             if (isEmpty) {
-                System.out.println("empty");
-                //
+                System.out.println("empty " + xCoord + "," + yCoord);
+                // reveal non number
             }
-            System.out.println("clicked");
         });
     }
-
-
 }
