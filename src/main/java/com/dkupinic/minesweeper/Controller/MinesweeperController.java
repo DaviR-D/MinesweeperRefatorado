@@ -43,9 +43,10 @@ public class MinesweeperController {
 
     private void addDifficultyOptions() {
         difficultyChoiceBox.getItems().addAll(
-                String.valueOf(Difficulty.BEGINNER),
-                String.valueOf(Difficulty.ADVANCED),
-                String.valueOf(Difficulty.ENTHUSIAST));
+            String.valueOf(Difficulty.BEGINNER),
+            String.valueOf(Difficulty.ADVANCED),
+            String.valueOf(Difficulty.ENTHUSIAST)
+        );
 
         difficultyChoiceBox.setValue(String.valueOf(Difficulty.BEGINNER));
     }

@@ -2,6 +2,7 @@ package com.dkupinic.minesweeper.Model.Field;
 
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
+import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -43,6 +44,9 @@ public class Field extends StackPane {
     private void prepareFields(Board board) {
         styleFields();
         prepareBombs(board);
+
+        bomb.setOpacity(0);
+
         getChildren().addAll(fieldNode, bomb);
         setTranslateX(xCoord * FIELD_SIZE);
         setTranslateY(yCoord * FIELD_SIZE);
@@ -63,7 +67,7 @@ public class Field extends StackPane {
 
     private void styleFields() {
         fieldNode = new Rectangle(FIELD_SIZE, FIELD_SIZE);
-        fieldNode.setFill(Color.BLACK);
+        fieldNode.setFill(Color.web("#0a0d36"));
         fieldNode.setStroke(Color.web("#1f246a"));
         fieldNode.setStrokeWidth(2);
         fieldNode.setVisible(true);
@@ -85,6 +89,8 @@ public class Field extends StackPane {
     private void handleBombs() {
         bomb.setOnMouseClicked(event -> {
             System.out.println("bomb " + xCoord + "," + yCoord);
+            bomb.setOpacity(1);
+            fieldNode.setFill(Color.BLACK);
             //reveal all
             //lose
         });
@@ -92,10 +98,12 @@ public class Field extends StackPane {
 
     private void handleEmpty() {
         fieldNode.setOnMouseClicked(event -> {
-            if (isEmpty) {
-                System.out.println("empty " + xCoord + "," + yCoord);
-                // reveal non number
-            }
+
+            System.out.println("empty " + xCoord + "," + yCoord);
+            GameLogic gl = new GameLogic();
+            gl.revealEmptyFields(isEmpty, fieldNode);
+            // reveal non number
+
         });
     }
 }

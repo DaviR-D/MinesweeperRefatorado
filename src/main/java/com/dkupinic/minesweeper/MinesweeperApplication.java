@@ -14,7 +14,7 @@ public class MinesweeperApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MinesweeperApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        scene.getStylesheets().addAll(Objects.requireNonNull(getClass().getResource("styles/styles.css").toExternalForm()));
+        scene.getStylesheets().addAll(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("styles/styles.css")).toExternalForm()));
         stage.getIcons().add(new Image("file:src/main/resources/com/dkupinic/minesweeper/img/icon.png"));
         stage.setTitle("Minesweeper");
         stage.setResizable(false);
