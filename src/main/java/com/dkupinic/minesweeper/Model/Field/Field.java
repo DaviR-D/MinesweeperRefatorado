@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class Field extends StackPane {
 
@@ -16,6 +17,8 @@ public class Field extends StackPane {
     private final int yCoord;
     private final boolean isEmpty;
     private boolean containsBomb;
+
+    public String count;
 
     private Rectangle fieldNode;
     private Image bombImage20px;
@@ -105,5 +108,13 @@ public class Field extends StackPane {
             // reveal non number
 
         });
+    }
+
+    public int getxCoord() {
+        return xCoord;
+    }
+
+    public int getyCoord() {
+        return yCoord;
     }
 }
