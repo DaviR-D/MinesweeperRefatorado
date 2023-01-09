@@ -10,6 +10,7 @@ import java.util.List;
 
 public class BoardBuilder {
     private static Field[][] grid;
+    private static Field[][] grid2;
     public void drawBoard(Difficulty difficulty) throws InvalidDifficultyException {
         Board boardSize = new Board(difficulty);
         int columns = boardSize.getColumns();
@@ -19,17 +20,39 @@ public class BoardBuilder {
         grid = new Field[columns][rows];
         double minePercentage = getMinePercentage(difficulty);
 
+        Field field = null;
+
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
 
                 boolean hasMine = Math.random() < minePercentage;
-                Field field = new Field(i, j, hasMine, boardSize);
+                field = new Field(i, j, hasMine, boardSize);
 
                 grid[i][j] = field;
 
                 MinesweeperController.pane.getChildren().add(field);
 
-                getNeighbours(field,boardSize);
+            }
+
+        }
+
+        for (int a = 0; a < columns; a++) {
+            for (int b = 0; b < rows; b++) {
+                Field fd = grid[a][b];
+                if (fd.containsBomb) {
+                    int bombcount = 0;
+
+                    ArrayList<Field> fields = (ArrayList<Field>) getNeighbours(field,boardSize);
+
+                    for (Field f : fields) {
+                        if (!f.containsBomb) {
+                            bombcount++;
+
+                        }
+                    }
+                    field.bombCount.setText(Integer.toString(bombcount));
+
+                }
             }
         }
 
@@ -56,14 +79,12 @@ public class BoardBuilder {
 
             int newX = field.getxCoord() + dx;
             int newY = field.getyCoord() + dy;
-
             if (newX >= 0 && newX < b.getSize() && newY >= 0 && newY < b.getSize()) {
                 neighbours.add(grid[newX][newY]);
             }
             i++;
         }
 
-        field.count = "1";
 
         return neighbours;
     }

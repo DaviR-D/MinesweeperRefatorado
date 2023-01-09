@@ -15,10 +15,10 @@ public class Field extends StackPane {
     public static int FIELD_SIZE;
     private final int xCoord;
     private final int yCoord;
-    private final boolean isEmpty;
-    private boolean containsBomb;
+    public final boolean isEmpty;
+    public boolean containsBomb;
 
-    public String count;
+    public Text bombCount = new Text();
 
     private Rectangle fieldNode;
     private Image bombImage20px;
@@ -50,7 +50,11 @@ public class Field extends StackPane {
 
         bomb.setOpacity(0);
 
-        getChildren().addAll(fieldNode, bomb);
+        bombCount.setFill(Color.RED);
+        bombCount.setStyle("-fx-font-size: 20px");
+
+
+        getChildren().addAll(fieldNode, bomb, bombCount);
         setTranslateX(xCoord * FIELD_SIZE);
         setTranslateY(yCoord * FIELD_SIZE);
         handleOnClick();
