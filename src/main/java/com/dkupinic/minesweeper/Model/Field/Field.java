@@ -2,9 +2,12 @@ package com.dkupinic.minesweeper.Model.Field;
 
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
+import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -49,10 +52,14 @@ public class Field extends StackPane {
         prepareBombs(board);
 
         bomb.setOpacity(0);
+
         bombCount = new Text();
         bombCount.setFill(Color.RED);
+
+
         bombCount.setStyle("-fx-font-size: 20px");
 
+        bombCount.setOpacity(0);
 
         getChildren().addAll(fieldNode, bomb, bombCount);
         setTranslateX(xCoord * FIELD_SIZE);
@@ -91,6 +98,7 @@ public class Field extends StackPane {
     private void handleOnClick() {
         handleBombs();
         handleEmpty();
+        handleBombCount();
     }
 
     private void handleBombs() {
@@ -101,16 +109,29 @@ public class Field extends StackPane {
             //reveal all
             //lose
         });
+
     }
 
     private void handleEmpty() {
         fieldNode.setOnMouseClicked(event -> {
+
+            bombCount.setOpacity(1);
 
             System.out.println("empty " + xCoord + "," + yCoord);
             GameLogic gl = new GameLogic();
             gl.revealEmptyFields(isEmpty, fieldNode);
             // reveal non number
 
+        });
+    }
+
+    private void handleBombCount() {
+        bombCount.setOnMouseClicked(event -> {
+            bombCount.setOpacity(1);
+
+            System.out.println("empty " + xCoord + "," + yCoord);
+            GameLogic gl = new GameLogic();
+            gl.revealEmptyFields(isEmpty, fieldNode);
         });
     }
 

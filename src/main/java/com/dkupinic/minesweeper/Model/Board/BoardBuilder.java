@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardBuilder {
-    private static Field[][] grid;
+    private Field[][] grid;
 
     public void drawBoard(Difficulty difficulty) throws InvalidDifficultyException {
         Board boardSize = new Board(difficulty);
@@ -58,7 +58,7 @@ public class BoardBuilder {
         }
     }
 
-    static List<Field> getNeighbours(Field field, Board b) {
+    private List<Field> getNeighbours(Field field, Board b) {
 
         List<Field> neighbours = new ArrayList<>();
 
