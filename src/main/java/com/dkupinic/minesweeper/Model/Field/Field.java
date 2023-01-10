@@ -18,7 +18,7 @@ public class Field extends StackPane {
     public final boolean isEmpty;
     public boolean containsBomb;
 
-    public Text bombCount = new Text();
+    public Text bombCount;
 
     private Rectangle fieldNode;
     private Image bombImage20px;
@@ -49,7 +49,7 @@ public class Field extends StackPane {
         prepareBombs(board);
 
         bomb.setOpacity(0);
-
+        bombCount = new Text();
         bombCount.setFill(Color.RED);
         bombCount.setStyle("-fx-font-size: 20px");
 

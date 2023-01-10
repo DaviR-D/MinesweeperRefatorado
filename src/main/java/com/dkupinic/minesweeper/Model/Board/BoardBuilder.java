@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BoardBuilder {
     private static Field[][] grid;
-    private static Field[][] grid2;
+
     public void drawBoard(Difficulty difficulty) throws InvalidDifficultyException {
         Board boardSize = new Board(difficulty);
         int columns = boardSize.getColumns();
@@ -20,42 +20,42 @@ public class BoardBuilder {
         grid = new Field[columns][rows];
         double minePercentage = getMinePercentage(difficulty);
 
-        Field field = null;
 
         for (int i = 0; i < columns; i++) {
             for (int j = 0; j < rows; j++) {
 
                 boolean hasMine = Math.random() < minePercentage;
-                field = new Field(i, j, hasMine, boardSize);
+                Field field = new Field(i, j, hasMine, boardSize);
 
                 grid[i][j] = field;
 
                 MinesweeperController.pane.getChildren().add(field);
 
             }
-
         }
 
         for (int a = 0; a < columns; a++) {
             for (int b = 0; b < rows; b++) {
+
                 Field fd = grid[a][b];
-                if (fd.containsBomb) {
+
+                if (!fd.containsBomb) {
+                    ArrayList<Field> fields = (ArrayList<Field>) getNeighbours(fd,boardSize);
+
                     int bombcount = 0;
-
-                    ArrayList<Field> fields = (ArrayList<Field>) getNeighbours(field,boardSize);
-
                     for (Field f : fields) {
-                        if (!f.containsBomb) {
+                        if (f.containsBomb) {
                             bombcount++;
-
                         }
                     }
-                    field.bombCount.setText(Integer.toString(bombcount));
-
+                    //field.bombCount.setText(Integer.toString(bombcount));
+                    if (bombcount > 0) {
+                        fd.bombCount.setText(Integer.toString(bombcount));
+                    }
                 }
+
             }
         }
-
     }
 
     static List<Field> getNeighbours(Field field, Board b) {
@@ -75,7 +75,7 @@ public class BoardBuilder {
 
         for (int i = 0; i < points.length; i++) {
             int dx = points[i];
-            int dy = points[i++];
+            int dy = points[i+1];
 
             int newX = field.getxCoord() + dx;
             int newY = field.getyCoord() + dy;
@@ -84,7 +84,6 @@ public class BoardBuilder {
             }
             i++;
         }
-
 
         return neighbours;
     }
@@ -100,5 +99,4 @@ public class BoardBuilder {
         }
         throw new InvalidDifficultyException();
     }
-
 }
