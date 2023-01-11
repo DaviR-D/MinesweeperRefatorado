@@ -58,34 +58,43 @@ public class BoardBuilder {
         }
     }
 
-    private List<Field> getNeighbours(Field field, Board b) {
-
-        List<Field> neighbours = new ArrayList<>();
-
-        int[] points = new int[]{
-                -1, -1,
-                -1,  0,
-                -1,  1,
-                 0, -1,
-                 0,  1,
-                 1, -1,
-                 1,  0,
-                 1,  1
+    private int[] generateNeightbourPoints() {
+        return new int[]{
+            -1, -1,
+            -1,  0,
+            -1,  1,
+             0, -1,
+             0,  1,
+             1, -1,
+             1,  0,
+             1,  1
         };
+    }
 
-        for (int i = 0; i < points.length; i++) {
-            int dx = points[i];
-            int dy = points[i+1];
+    private List<Field> iterateNeighbours(List<Field> neighbours, int[] points, Field field, Board b) {
+        for (int iterator = 0; iterator < points.length; iterator++) {
+            int dx = points[iterator];
+            int dy = points[iterator + 1];
 
             int newX = field.getxCoord() + dx;
             int newY = field.getyCoord() + dy;
-            if (newX >= 0 && newX < b.getSize() && newY >= 0 && newY < b.getSize()) {
+
+            if (validNeighbour(b, newX, newY)) {
                 neighbours.add(grid[newX][newY]);
             }
-            i++;
+            iterator++;
         }
-
         return neighbours;
+    }
+
+    private boolean validNeighbour(Board b, int newX, int newY) {
+        return newX >= 0 && newX < b.getSize() && newY >= 0 && newY < b.getSize();
+    }
+
+    private List<Field> getNeighbours(Field field, Board b) {
+        List<Field> neighbours = new ArrayList<>();
+        int[] points = generateNeightbourPoints();
+        return iterateNeighbours(neighbours, points, field, b);
     }
 
     private double getMinePercentage(Difficulty dc) throws InvalidDifficultyException {
