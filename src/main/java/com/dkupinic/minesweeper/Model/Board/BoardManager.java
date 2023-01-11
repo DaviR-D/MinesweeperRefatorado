@@ -22,67 +22,121 @@ public class BoardManager {
         this.rows = boardSize.getRows();
     }
 
+    /**
+     * creates the board including the grid
+     * @throws InvalidDifficultyException hrown when mine percentage can not be determined
+     */
     public void drawBoard() throws InvalidDifficultyException {
         grid = new Field[columns][rows];
-        double minePercentage = getMinePercentage();
-
-        generateFields(minePercentage);
+        generateFields();
         drawNeighbours();
     }
 
-    private void generateFields(double minePercentage) {
+    /**
+     * generates Fields with all properties
+     * @throws InvalidDifficultyException thrown when mine percentage can not be determined
+     */
+    private void generateFields() throws InvalidDifficultyException {
         for (int columnIterator = 0; columnIterator < columns; columnIterator++) {
             for (int rowIterator = 0; rowIterator < rows; rowIterator++) {
 
-                Field field = new Field(columnIterator, rowIterator, containsMine(minePercentage), boardSize);
+                Field field = new Field(columnIterator, rowIterator, generateBombProbalitity(getMinePercentage()), boardSize);
                 grid[columnIterator][rowIterator] = field;
                 addToPane(field);
             }
         }
     }
 
-    private boolean containsMine(double minePercentage) {
-        return Math.random() < minePercentage;
-    }
-
+    /**
+     * adds the generated fields to the board
+     * @param field field which contains nothing, a number or a bomb
+     */
     private void addToPane(Field field) {
         MinesweeperController.pane.getChildren().add(field);
     }
 
+    /**
+     * generates a random number for bomb generation
+     * @param bombPercentage number of bombs in each board, in %
+     * @return boolean whether field contains bomb or not
+     */
+    private boolean generateBombProbalitity(double bombPercentage) {
+        return Math.random() < bombPercentage;
+    }
+
+    /**
+     * get mine percentage based on difficulty
+     * @return Exception if an unusual case of no match
+     * @throws InvalidDifficultyException thrown if no match
+     */
+    private double getMinePercentage() throws InvalidDifficultyException {
+        switch (boardDifficulty) {
+            case BEGINNER, ADVANCED -> {
+                return 0.16;
+            }
+            case ENTHUSIAST -> {
+                return 0.21;
+            }
+        }
+        throw new InvalidDifficultyException();
+    }
+
+    /**
+     * draw a number (0-8) on the screen,
+     * based on how many mines are around the current field that is being iterated
+     */
     private void drawNeighbours() {
         for (int columnIterator = 0; columnIterator < columns; columnIterator++) {
             for (int rowIterator = 0; rowIterator < rows; rowIterator++) {
-
                 Field field = grid[columnIterator][rowIterator];
                 checkIfBombField(field);
             }
         }
     }
 
+    /**
+     * updates the bomb count if the field doesn't contain a bomb
+     * @param field field from drawNeighbours()
+     */
     private void checkIfBombField(Field field) {
         if (!field.containsBomb) {
-            ArrayList<Field> fields = (ArrayList<Field>) getNeighbours(field, boardSize);
+            ArrayList<Field> fields = (ArrayList<Field>) getNeighbours(field);
 
             int bombcount = 0;
             updateBombCountText(increaseBombCount(fields, bombcount), field);
         }
     }
 
+    /**
+     * draw the number on screen with the updated value
+     * @param bombCount integer which will be drawn
+     * @param field field which will contain the number
+     */
     private void updateBombCountText(int bombCount, Field field) {
         if (bombCount > 0) {
             field.bombCount.setText(Integer.toString(bombCount));
         }
     }
 
-    private int increaseBombCount(ArrayList<Field> fields, int bombcount) {
+    /**
+     * iterate through the field Array and decide if the bomb count needs to be incremented or not
+     * @param fields the field array from checkIfBombField()
+     * @param bombCount the number of bombs in the surrounding area
+     * @return the bomb count
+     */
+    private int increaseBombCount(ArrayList<Field> fields, int bombCount) {
         for (Field f : fields) {
             if (f.containsBomb) {
-                bombcount++;
+                bombCount++;
             }
         }
-        return bombcount;
+        return bombCount;
     }
 
+    /**
+     * generates an array with the coordinates of the surrounding fields
+     * @return the integer array
+     */
     private int[] generateNeightbourPoints() {
         return new int[]{
                 -1, -1,
@@ -96,46 +150,47 @@ public class BoardManager {
         };
     }
 
-    private List<Field> iterateNeighbours(List<Field> neighbours,
-                                          int[] points,
-                                          Field field,
-                                          Board board
-    ) {
-        for (int iterator = 0; iterator < points.length; iterator++) {
+    /**
+     * creates an empty list of neighbours and filled array of points
+     * @param field field used for iterateNeighbours()
+     * @return filled list of neighbours
+     */
+    private List<Field> getNeighbours(Field field) {
+        List<Field> neighbours = new ArrayList<>();
+        int[] points = generateNeightbourPoints();
+
+        return iterateNeighbours(neighbours, points, field);
+    }
+
+    /**
+     * iterates over pairs of points and adds valid neighbours to the neighbour list
+     * @param neighbours the neighbour list
+     * @param points the pair array
+     * @param field the field to get the coordinates from
+     * @return the updated neighbour list
+     */
+    private List<Field> iterateNeighbours(List<Field> neighbours, int[] points, Field field) {
+        for (int iterator = 0; iterator < points.length; iterator += 2) {
             int dx = points[iterator];
             int dy = points[iterator + 1];
 
             int newX = field.getxCoord() + dx;
             int newY = field.getyCoord() + dy;
 
-            if (validNeighbour(board, newX, newY)) {
+            if (validNeighbour(newX, newY)) {
                 neighbours.add(grid[newX][newY]);
             }
-            iterator++;
         }
         return neighbours;
     }
 
-    private boolean validNeighbour(Board b, int newX, int newY) {
-        return newX >= 0 && newX < b.getSize() && newY >= 0 && newY < b.getSize();
-    }
-
-    private List<Field> getNeighbours(Field field, Board board) {
-        List<Field> neighbours = new ArrayList<>();
-        int[] points = generateNeightbourPoints();
-
-        return iterateNeighbours(neighbours, points, field, board);
-    }
-
-    private double getMinePercentage() throws InvalidDifficultyException {
-        switch (boardDifficulty) {
-            case BEGINNER, ADVANCED -> {
-                return 0.16;
-            }
-            case ENTHUSIAST -> {
-                return 0.21;
-            }
-        }
-        throw new InvalidDifficultyException();
+    /**
+     * checks for valid neighbour
+     * @param newX new x coordinate from iterateNeighbours()
+     * @param newY new y coordinate from iterateNeighbours()
+     * @return true for a valid neighbour and false for an invalid neighbour
+     */
+    private boolean validNeighbour(int newX, int newY) {
+        return newX >= 0 && newX < boardSize.getSize() && newY >= 0 && newY < boardSize.getSize();
     }
 }
