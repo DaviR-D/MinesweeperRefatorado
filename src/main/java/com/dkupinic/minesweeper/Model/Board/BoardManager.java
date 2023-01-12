@@ -6,7 +6,6 @@ import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import com.dkupinic.minesweeper.Model.Field.Field;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BoardManager {
     private final Board boardSize;
@@ -24,7 +23,7 @@ public class BoardManager {
 
     /**
      * creates the board including the grid
-     * @throws InvalidDifficultyException hrown when mine percentage can not be determined
+     * @throws InvalidDifficultyException thrown when mine percentage can not be determined
      */
     public void drawBoard() throws InvalidDifficultyException {
         grid = new Field[columns][rows];
@@ -100,7 +99,7 @@ public class BoardManager {
      */
     private void checkIfBombField(Field field) {
         if (!field.containsBomb) {
-            ArrayList<Field> fields = (ArrayList<Field>) getNeighbours(field);
+            ArrayList<Field> fields = getNeighbours(field);
 
             int bombcount = 0;
             updateBombCountText(increaseBombCount(fields, bombcount), field);
@@ -108,7 +107,7 @@ public class BoardManager {
     }
 
     /**
-     * draw the number on screen with the updated value
+     * draw the bomb count on screen with the updated value
      * @param bombCount integer which will be drawn
      * @param field field which will contain the number
      */
@@ -152,11 +151,12 @@ public class BoardManager {
 
     /**
      * creates an empty list of neighbours and filled array of points
+     *
      * @param field field used for iterateNeighbours()
      * @return filled list of neighbours
      */
-    private List<Field> getNeighbours(Field field) {
-        List<Field> neighbours = new ArrayList<>();
+    private ArrayList<Field> getNeighbours(Field field) {
+        ArrayList<Field> neighbours = new ArrayList<>();
         int[] points = generateNeightbourPoints();
 
         return iterateNeighbours(neighbours, points, field);
@@ -164,12 +164,13 @@ public class BoardManager {
 
     /**
      * iterates over pairs of points and adds valid neighbours to the neighbour list
+     *
      * @param neighbours the neighbour list
-     * @param points the pair array
-     * @param field the field to get the coordinates from
+     * @param points     the pair array
+     * @param field      the field to get the coordinates from
      * @return the updated neighbour list
      */
-    private List<Field> iterateNeighbours(List<Field> neighbours, int[] points, Field field) {
+    private ArrayList<Field> iterateNeighbours(ArrayList<Field> neighbours, int[] points, Field field) {
         for (int iterator = 0; iterator < points.length; iterator += 2) {
             int dx = points[iterator];
             int dy = points[iterator + 1];
@@ -191,6 +192,7 @@ public class BoardManager {
      * @return true for a valid neighbour and false for an invalid neighbour
      */
     private boolean validNeighbour(int newX, int newY) {
-        return newX >= 0 && newX < boardSize.getSize() && newY >= 0 && newY < boardSize.getSize();
+        return newX >= 0 && newX < boardSize.getSize() &&
+               newY >= 0 && newY < boardSize.getSize();
     }
 }

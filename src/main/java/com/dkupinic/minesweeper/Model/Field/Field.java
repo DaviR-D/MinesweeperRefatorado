@@ -2,12 +2,9 @@ package com.dkupinic.minesweeper.Model.Field;
 
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
-import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,7 +15,7 @@ public class Field extends StackPane {
     public static int FIELD_SIZE;
     private final int xCoord;
     private final int yCoord;
-    public final boolean isEmpty;
+    public boolean isEmpty;
     public boolean containsBomb;
 
     public Text bombCount;
@@ -32,15 +29,19 @@ public class Field extends StackPane {
     public Field(int x, int y, boolean containsBomb, Board board) {
         this.xCoord = x;
         this.yCoord = y;
+        setFieldFlags(containsBomb);
+        initImages();
+        calcFieldSize(board);
+        prepareFields(board);
+    }
+
+    private void setFieldFlags(boolean containsBomb) {
         if (containsBomb) {
             this.containsBomb = true;
             this.isEmpty = false;
         } else {
             this.isEmpty = true;
         }
-        initImages();
-        calcFieldSize(board);
-        prepareFields(board);
     }
 
     private void calcFieldSize(Board bd) {
@@ -49,22 +50,16 @@ public class Field extends StackPane {
 
     private void prepareFields(Board board) {
         styleFields();
+        styleBombCount();
         prepareBombs(board);
-
-        bomb.setOpacity(0);
-
-        bombCount = new Text();
-        bombCount.setFill(Color.RED);
-
-
-        bombCount.setStyle("-fx-font-size: 20px");
-
-        bombCount.setOpacity(0);
-
         getChildren().addAll(fieldNode, bomb, bombCount);
+        offsetFields();
+        handleOnClick();
+    }
+
+    private void offsetFields() {
         setTranslateX(xCoord * FIELD_SIZE);
         setTranslateY(yCoord * FIELD_SIZE);
-        handleOnClick();
     }
 
     private void initImages() {
@@ -77,6 +72,14 @@ public class Field extends StackPane {
     private void prepareBombs(Board board) {
         setCorrectImage(board);
         bomb.setVisible(this.containsBomb);
+        bomb.setOpacity(0);
+    }
+
+    private void styleBombCount() {
+        bombCount = new Text();
+        bombCount.setFill(Color.YELLOW);
+        bombCount.setOpacity(0);
+        bombCount.setStyle("-fx-font-size: 20px");
     }
 
     private void styleFields() {
@@ -96,43 +99,32 @@ public class Field extends StackPane {
     }
 
     private void handleOnClick() {
-        handleBombs();
-        handleEmpty();
-        handleBombCount();
+        onBombFieldClick();
+        onEmptyFieldClick();
     }
 
-    private void handleBombs() {
-        bomb.setOnMouseClicked(event -> {
-            System.out.println("bomb " + xCoord + "," + yCoord);
-            bomb.setOpacity(1);
-            fieldNode.setFill(Color.BLACK);
-            //reveal all
-            //lose
-        });
-
+    private void onBombFieldClick() {
+        bomb.setOnMouseClicked(event -> handleBombField());
     }
 
-    private void handleEmpty() {
-        fieldNode.setOnMouseClicked(event -> {
-
-            bombCount.setOpacity(1);
-
-            System.out.println("empty " + xCoord + "," + yCoord);
-            GameLogic gl = new GameLogic();
-            gl.revealEmptyFields(isEmpty, fieldNode);
-            // reveal non number
-
-        });
+    private void onEmptyFieldClick() {
+        bombCount.setOnMouseClicked(event -> handleNonBombField());
+        fieldNode.setOnMouseClicked(event -> handleNonBombField());
     }
 
-    private void handleBombCount() {
-        bombCount.setOnMouseClicked(event -> {
-            bombCount.setOpacity(1);
+    private void handleNonBombField() {
+        bombCount.setOpacity(1);
+        System.out.println("empty " + xCoord + "," + yCoord);
+        GameLogic gl = new GameLogic();
+        gl.revealEmptyFields(isEmpty, fieldNode);
+    }
 
-            System.out.println("empty " + xCoord + "," + yCoord);
-            GameLogic gl = new GameLogic();
-            gl.revealEmptyFields(isEmpty, fieldNode);
-        });
+    private void handleBombField() {
+        System.out.println("bomb " + xCoord + "," + yCoord);
+        bomb.setOpacity(1);
+        fieldNode.setFill(Color.BLACK);
+        //reveal all
+        //lose
     }
 
     public int getxCoord() {
