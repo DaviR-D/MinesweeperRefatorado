@@ -113,18 +113,29 @@ public class Field extends StackPane {
     }
 
     private void handleNonBombField() {
+        revealClickedField();
+        GameLogic.revealEmptyFields(isEmpty, fieldNode);
+    }
+
+    private void revealClickedField() {
         bombCount.setOpacity(1);
         System.out.println("empty " + xCoord + "," + yCoord);
-        GameLogic gl = new GameLogic();
-        gl.revealEmptyFields(isEmpty, fieldNode);
     }
 
     private void handleBombField() {
-        System.out.println("bomb " + xCoord + "," + yCoord);
+        revealBomb();
+        GameLogic.revealAllFields();
+        //lose
+    }
+
+    private void revealBomb() {
         bomb.setOpacity(1);
         fieldNode.setFill(Color.BLACK);
-        //reveal all
-        //lose
+        System.out.println("bomb " + xCoord + "," + yCoord);
+    }
+
+    public Rectangle getFieldNode() {
+        return fieldNode;
     }
 
     public int getxCoord() {

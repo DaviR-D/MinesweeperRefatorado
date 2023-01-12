@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class BoardManager {
     private final Board boardSize;
-    private final Difficulty boardDifficulty;
+    private static Difficulty boardDifficulty;
     private final int columns;
     private final int rows;
-    private Field[][] grid;
+    private static Field[][] grid;
 
     public BoardManager(Difficulty difficulty) {
-        this.boardDifficulty = difficulty;
+        boardDifficulty = difficulty;
         this.boardSize = new Board(boardDifficulty);
         this.columns = boardSize.getColumns();
         this.rows = boardSize.getRows();
@@ -194,5 +194,13 @@ public class BoardManager {
     private boolean validNeighbour(int newX, int newY) {
         return newX >= 0 && newX < boardSize.getSize() &&
                newY >= 0 && newY < boardSize.getSize();
+    }
+
+    public static Difficulty getBoardDifficulty() {
+        return boardDifficulty;
+    }
+
+    public static Field[][] getGrid() {
+        return grid;
     }
 }
