@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class BoardManager {
     private final Board boardSize;
@@ -22,6 +21,14 @@ public class BoardManager {
         this.boardSize = new Board(boardDifficulty);
         this.columns = boardSize.getColumns();
         this.rows = boardSize.getRows();
+    }
+
+    public static Difficulty getBoardDifficulty() {
+        return boardDifficulty;
+    }
+
+    public static Field[][] getGrid() {
+        return grid;
     }
 
     /**
@@ -121,8 +128,11 @@ public class BoardManager {
         }
     }
 
+    /**
+     * gives each bombCounter a distinguishable color
+     * @param field the field containing the number
+     */
     private void setBombCountColor(Field field) {
-        if (Objects.equals(field.getBombCountString(), "")) return;
         Text bombCount = field.getBombCount();
         int bombNumber = Integer.parseInt(bombCount.getText());
         switch (bombNumber) {
@@ -131,7 +141,7 @@ public class BoardManager {
             case 3 -> bombCount.setFill(Color.ORANGE);
             case 4 -> bombCount.setFill(Color.RED);
             case 5 -> bombCount.setFill(Color.GREEN);
-            case 6 -> bombCount.setFill(Color.ROYALBLUE);
+            case 6 -> bombCount.setFill(Color.TEAL);
             case 7 -> bombCount.setFill(Color.DARKMAGENTA);
             case 8 -> bombCount.setFill(Color.BEIGE);
         }
@@ -214,13 +224,5 @@ public class BoardManager {
     private boolean validNeighbour(int newX, int newY) {
         return newX >= 0 && newX < boardSize.getSize() &&
                newY >= 0 && newY < boardSize.getSize();
-    }
-
-    public static Difficulty getBoardDifficulty() {
-        return boardDifficulty;
-    }
-
-    public static Field[][] getGrid() {
-        return grid;
     }
 }

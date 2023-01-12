@@ -36,6 +36,26 @@ public class Field extends StackPane {
         prepareFields(board);
     }
 
+    public Rectangle getFieldNode() {
+        return fieldNode;
+    }
+
+    public int getxCoord() {
+        return xCoord;
+    }
+
+    public int getyCoord() {
+        return yCoord;
+    }
+
+    public void setBombCount(String count) {
+        bombCount.setText(count);
+    }
+
+    public Text getBombCount() {
+        return bombCount;
+    }
+
     private void setFieldFlags(boolean containsBomb) {
         if (containsBomb) {
             this.containsBomb = true;
@@ -140,29 +160,5 @@ public class Field extends StackPane {
         bomb.setOpacity(1);
         fieldNode.setFill(Color.BLACK);
         System.out.println("bomb " + xCoord + "," + yCoord);
-    }
-
-    public Rectangle getFieldNode() {
-        return fieldNode;
-    }
-
-    public int getxCoord() {
-        return xCoord;
-    }
-
-    public int getyCoord() {
-        return yCoord;
-    }
-
-    public void setBombCount(String count) {
-        bombCount.setText(count);
-    }
-
-    public Text getBombCount() {
-        return bombCount;
-    }
-
-    public String getBombCountString() {
-        return bombCount.getText();
     }
 }
