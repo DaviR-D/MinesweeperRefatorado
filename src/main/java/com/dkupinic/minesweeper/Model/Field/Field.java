@@ -1,6 +1,7 @@
 package com.dkupinic.minesweeper.Model.Field;
 
 import com.dkupinic.minesweeper.Model.Board.Board;
+import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ public class Field extends StackPane {
     public boolean isEmpty;
     public boolean containsBomb;
 
-    public Text bombCount;
+    private Text bombCount;
 
     private Rectangle fieldNode;
     private Image bombImage20px;
@@ -77,9 +78,16 @@ public class Field extends StackPane {
 
     private void styleBombCount() {
         bombCount = new Text();
-        bombCount.setFill(Color.YELLOW);
         bombCount.setOpacity(0);
-        bombCount.setStyle("-fx-font-size: 20px");
+        setBombCountFontSize();
+    }
+
+    private void setBombCountFontSize() {
+        switch (BoardManager.getBoardDifficulty()) {
+            case BEGINNER -> bombCount.setStyle("-fx-font-size: 32px; -fx-font-family: 'Consolas'");
+            case ADVANCED -> bombCount.setStyle("-fx-font-size: 22px; -fx-font-family: 'Consolas'");
+            case ENTHUSIAST -> bombCount.setStyle("-fx-font-size: 18px; -fx-font-family: 'Consolas'");
+        }
     }
 
     private void styleFields() {
@@ -117,7 +125,7 @@ public class Field extends StackPane {
         GameLogic.revealEmptyFields(isEmpty, fieldNode);
     }
 
-    private void revealClickedField() {
+    public void revealClickedField() {
         bombCount.setOpacity(1);
         System.out.println("empty " + xCoord + "," + yCoord);
     }
@@ -128,7 +136,7 @@ public class Field extends StackPane {
         //lose
     }
 
-    private void revealBomb() {
+    public void revealBomb() {
         bomb.setOpacity(1);
         fieldNode.setFill(Color.BLACK);
         System.out.println("bomb " + xCoord + "," + yCoord);
@@ -144,5 +152,17 @@ public class Field extends StackPane {
 
     public int getyCoord() {
         return yCoord;
+    }
+
+    public void setBombCount(String count) {
+        bombCount.setText(count);
+    }
+
+    public Text getBombCount() {
+        return bombCount;
+    }
+
+    public String getBombCountString() {
+        return bombCount.getText();
     }
 }

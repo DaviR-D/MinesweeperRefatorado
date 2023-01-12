@@ -4,8 +4,11 @@ import com.dkupinic.minesweeper.Controller.MinesweeperController;
 import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import com.dkupinic.minesweeper.Model.Field.Field;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BoardManager {
     private final Board boardSize;
@@ -113,7 +116,24 @@ public class BoardManager {
      */
     private void updateBombCountText(int bombCount, Field field) {
         if (bombCount > 0) {
-            field.bombCount.setText(Integer.toString(bombCount));
+            field.setBombCount(Integer.toString(bombCount));
+            setBombCountColor(field);
+        }
+    }
+
+    private void setBombCountColor(Field field) {
+        if (Objects.equals(field.getBombCountString(), "")) return;
+        Text bombCount = field.getBombCount();
+        int bombNumber = Integer.parseInt(bombCount.getText());
+        switch (bombNumber) {
+            case 1 -> bombCount.setFill(Color.WHITE);
+            case 2 -> bombCount.setFill(Color.YELLOW);
+            case 3 -> bombCount.setFill(Color.ORANGE);
+            case 4 -> bombCount.setFill(Color.RED);
+            case 5 -> bombCount.setFill(Color.GREEN);
+            case 6 -> bombCount.setFill(Color.ROYALBLUE);
+            case 7 -> bombCount.setFill(Color.DARKMAGENTA);
+            case 8 -> bombCount.setFill(Color.BEIGE);
         }
     }
 
@@ -171,9 +191,9 @@ public class BoardManager {
      * @return the updated neighbour list
      */
     private ArrayList<Field> iterateNeighbours(ArrayList<Field> neighbours, int[] points, Field field) {
-        for (int iterator = 0; iterator < points.length; iterator += 2) {
-            int dx = points[iterator];
-            int dy = points[iterator + 1];
+        for (int i = 0; i < points.length; i += 2) {
+            int dx = points[i];
+            int dy = points[i + 1];
 
             int newX = field.getxCoord() + dx;
             int newY = field.getyCoord() + dy;

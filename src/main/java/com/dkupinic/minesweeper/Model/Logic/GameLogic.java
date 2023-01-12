@@ -24,6 +24,8 @@ public class GameLogic {
             for (int j = 0; j < tempBoard.getSize(); j++) {
                 Rectangle tempFieldNode = grid[i][j].getFieldNode();
                 tempFieldNode.setFill(Color.BLACK);
+                grid[i][j].revealClickedField();
+                grid[i][j].revealBomb();
             }
         }
     }
