@@ -7,6 +7,7 @@ import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -55,8 +56,16 @@ public class Field extends StackPane {
         return bombCount;
     }
 
+    public String getBombCountAsString() {
+        return bombCount.toString();
+    }
+
     public boolean getContainsBomb() {
         return containsBomb;
+    }
+
+    public boolean getIsEmpty() {
+        return isEmpty;
     }
 
     private void setFieldFlags(boolean containsBomb) {
@@ -139,21 +148,21 @@ public class Field extends StackPane {
     }
 
     private void onEmptyFieldClick() {
-        bombCount.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                handleNonBombField();
-            }
-        });
-        fieldNode.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                handleNonBombField();
-            }
-        });
+        bombCount.setOnMouseClicked(event -> handleEvent(event));
+        fieldNode.setOnMouseClicked(event -> handleEvent(event));
+    }
+
+    private void handleEvent(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            handleNonBombField();
+        }
     }
 
     private void handleNonBombField() {
         revealClickedField();
-        GameLogic.revealEmptyFields(isEmpty, fieldNode);
+        int i = getxCoord();
+        int j = getyCoord();
+        GameLogic.revealSurroundingFields(i, j);
     }
 
     public void revealClickedField() {
