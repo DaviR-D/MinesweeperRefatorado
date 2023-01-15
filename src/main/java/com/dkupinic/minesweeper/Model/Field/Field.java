@@ -6,26 +6,25 @@ import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Field extends StackPane {
-
-    public static int FIELD_SIZE;
     private final int xCoord;
     private final int yCoord;
-    public boolean isEmpty;
-    public boolean containsBomb;
-
-    private Text bombCount;
+    private boolean isEmpty;
+    private boolean containsBomb;
+    private int fieldSize;
 
     private Rectangle fieldNode;
+    private ImageView bomb;
     private Image bombImage20px;
     private Image bombImage25px;
     private Image bombImage50px;
-    private ImageView bomb;
+    private Text bombCount;
 
     public Field(int x, int y, boolean containsBomb, Board board) {
         this.xCoord = x;
@@ -56,6 +55,10 @@ public class Field extends StackPane {
         return bombCount;
     }
 
+    public boolean getContainsBomb() {
+        return containsBomb;
+    }
+
     private void setFieldFlags(boolean containsBomb) {
         if (containsBomb) {
             this.containsBomb = true;
@@ -66,7 +69,7 @@ public class Field extends StackPane {
     }
 
     private void calcFieldSize(Board bd) {
-        FIELD_SIZE = BoardSize.getLength() / bd.getRows();
+        fieldSize = BoardSize.getLength() / bd.getRows();
     }
 
     private void prepareFields(Board board) {
@@ -79,8 +82,8 @@ public class Field extends StackPane {
     }
 
     private void offsetFields() {
-        setTranslateX(xCoord * FIELD_SIZE);
-        setTranslateY(yCoord * FIELD_SIZE);
+        setTranslateX(xCoord * fieldSize);
+        setTranslateY(yCoord * fieldSize);
     }
 
     private void initImages() {
@@ -111,7 +114,7 @@ public class Field extends StackPane {
     }
 
     private void styleFields() {
-        fieldNode = new Rectangle(FIELD_SIZE, FIELD_SIZE);
+        fieldNode = new Rectangle(fieldSize, fieldSize);
         fieldNode.setFill(Color.web("#0a0d36"));
         fieldNode.setStroke(Color.web("#1f246a"));
         fieldNode.setStrokeWidth(2);
@@ -136,8 +139,16 @@ public class Field extends StackPane {
     }
 
     private void onEmptyFieldClick() {
-        bombCount.setOnMouseClicked(event -> handleNonBombField());
-        fieldNode.setOnMouseClicked(event -> handleNonBombField());
+        bombCount.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                handleNonBombField();
+            }
+        });
+        fieldNode.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                handleNonBombField();
+            }
+        });
     }
 
     private void handleNonBombField() {

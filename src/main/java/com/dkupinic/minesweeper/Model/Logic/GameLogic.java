@@ -12,14 +12,13 @@ public class GameLogic {
         if (isEmpty) {
             fieldNode.setFill(Color.BLACK);
         }
-
-
-        //revealEmptyFields();
+        revealSurroundingFields();
     }
 
     public static void revealAllFields() {
         Board tempBoard = new Board(BoardManager.getBoardDifficulty());
         Field[][] grid = BoardManager.getGrid();
+
         for (int i = 0; i < tempBoard.getSize(); i++) {
             for (int j = 0; j < tempBoard.getSize(); j++) {
                 Rectangle tempFieldNode = grid[i][j].getFieldNode();
@@ -29,6 +28,12 @@ public class GameLogic {
             }
         }
     }
+
+    private static void revealSurroundingFields() {
+
+    }
+
+
 
 
 

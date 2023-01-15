@@ -108,7 +108,7 @@ public class BoardManager {
      * @param field field from drawNeighbours()
      */
     private void checkIfBombField(Field field) {
-        if (!field.containsBomb) {
+        if (!field.getContainsBomb()) {
             ArrayList<Field> fields = getNeighbours(field);
 
             int bombcount = 0;
@@ -155,7 +155,7 @@ public class BoardManager {
      */
     private int increaseBombCount(ArrayList<Field> fields, int bombCount) {
         for (Field f : fields) {
-            if (f.containsBomb) {
+            if (f.getContainsBomb()) {
                 bombCount++;
             }
         }
