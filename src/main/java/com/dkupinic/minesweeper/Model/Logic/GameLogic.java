@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 public class GameLogic {
-    private static Field[][] grid = BoardManager.getGrid();
+    private static final Field[][] grid = BoardManager.getGrid();
 
     public static void revealEmptyField(boolean isEmpty, Rectangle fieldNode) {
         if (isEmpty) {
@@ -42,18 +42,21 @@ public class GameLogic {
             return;
         }
 
-        if (grid[i][j].getIsEmpty()) {
+        if (!grid[i][j].getIsEmpty()) {
             return;
         }
         Field tempF = grid[i][j];
         revealEmptyField(tempF.getIsEmpty(), tempF.getFieldNode());
 
-        //if (Objects.equals(grid[i][j].getBombCountAsString(), "0")) {
+        if (Objects.equals(tempF.getBombCountAsString(), "1")) {
+            return;
+        }
+        if (Objects.equals(tempF.getBombCountAsString(), "")) {
             revealSurroundingFields(i - 1, j);
             revealSurroundingFields(i + 1, j);
             revealSurroundingFields(i , j - 1);
             revealSurroundingFields(i , j + 1);
-        //}
+        }
 
     }
 

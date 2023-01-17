@@ -57,7 +57,8 @@ public class Field extends StackPane {
     }
 
     public String getBombCountAsString() {
-        return bombCount.toString();
+
+        return bombCount.getText();
     }
 
     public boolean getContainsBomb() {
