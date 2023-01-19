@@ -6,6 +6,7 @@ import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -14,6 +15,8 @@ public class MinesweeperController {
     private AnchorPane mainAnchor;
     @FXML
     private ChoiceBox<String> difficultyChoiceBox;
+    @FXML
+    private ImageView resetButton;
 
     public static Pane pane;
 

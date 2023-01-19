@@ -1,0 +1,7 @@
+.resetButton {
+    -fx-image: url("../img/reset/reset.png");
+}
+
+.resetButton:hover {
+    -fx-image: url("../img/reset/reset_hover.png");
+}
