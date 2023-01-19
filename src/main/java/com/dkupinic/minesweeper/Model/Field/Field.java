@@ -22,6 +22,10 @@ public class Field extends StackPane {
     private int fieldSize;
 
     private Rectangle fieldNode;
+    private ImageView flag;
+    private Image flagImage20px;
+    private Image flagImage25px;
+    private Image flagImage50px;
     private ImageView bomb;
     private Image bombImage20px;
     private Image bombImage25px;
@@ -32,7 +36,7 @@ public class Field extends StackPane {
         this.xCoord = x;
         this.yCoord = y;
         setFieldFlags(containsBomb);
-        initImages();
+        initBombImages();
         calcFieldSize(board);
         prepareFields(board);
     }
@@ -93,6 +97,10 @@ public class Field extends StackPane {
     private void prepareFields(Board board) {
         styleFields();
         styleBombCount();
+
+        initFlagImages();
+        setCorrectFlagImage(board);
+
         prepareBombs(board);
         getChildren().addAll(fieldNode, bomb, bombCount);
         offsetFields();
@@ -104,15 +112,22 @@ public class Field extends StackPane {
         setTranslateY(yCoord * fieldSize);
     }
 
-    private void initImages() {
+    private void initBombImages() {
         bomb = new ImageView();
         bombImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
         bombImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
         bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
     }
 
+    private void initFlagImages() {
+        flag = new ImageView();
+        flagImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag20px.png");
+        flagImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag25px.png");
+        flagImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag50px.png");
+    }
+
     private void prepareBombs(Board board) {
-        setCorrectImage(board);
+        setCorrectBombImage(board);
         bomb.setVisible(this.containsBomb);
         bomb.setOpacity(0);
     }
@@ -139,11 +154,19 @@ public class Field extends StackPane {
         fieldNode.setVisible(true);
     }
 
-    private void setCorrectImage(Board board) {
+    private void setCorrectBombImage(Board board) {
         switch (board.getCurrentDifficulty()) {
             case BEGINNER -> bomb.setImage(bombImage50px);
             case ADVANCED -> bomb.setImage(bombImage25px);
             case ENTHUSIAST -> bomb.setImage(bombImage20px);
+        }
+    }
+
+    private void setCorrectFlagImage(Board board) {
+        switch (board.getCurrentDifficulty()) {
+            case BEGINNER -> flag.setImage(flagImage50px);
+            case ADVANCED -> flag.setImage(flagImage25px);
+            case ENTHUSIAST -> flag.setImage(flagImage20px);
         }
     }
 
@@ -166,8 +189,11 @@ public class Field extends StackPane {
     private void handleEvent(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
             handleNonBombField();
-
         }
+        if (event.getButton() == MouseButton.SECONDARY) {
+            getChildren().add(flag);
+        }
+
     }
 
     private void handleNonBombField() {
