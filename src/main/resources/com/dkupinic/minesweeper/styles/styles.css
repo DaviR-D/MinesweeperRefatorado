@@ -5,3 +5,14 @@
 .resetButton:hover {
     -fx-image: url("../img/reset/reset_hover.png");
 }
+
+.choiceBox {
+    -fx-background-color: #e3c72d;
+    -fx-font-family: 'Consolas';
+    -fx-font-size: 15px;
+    -fx-text-fill: #000000;
+}
+
+.choiceBox:hover {
+    -fx-background-color: #2ca53e;
+}

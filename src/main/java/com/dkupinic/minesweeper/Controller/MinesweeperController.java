@@ -6,11 +6,14 @@ import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class MinesweeperController {
+    @FXML
+    public Label timerLabel;
     @FXML
     private AnchorPane mainAnchor;
     @FXML
@@ -19,6 +22,14 @@ public class MinesweeperController {
     private ImageView resetButton;
 
     public static Pane pane;
+
+    public Label getTimerLabel() {
+        return timerLabel;
+    }
+
+    public void setTimerLabel(String time) {
+        timerLabel.setText(time);
+    }
 
     @FXML
     public void initialize() {
@@ -53,6 +64,8 @@ public class MinesweeperController {
 
         difficultyChoiceBox.setValue(String.valueOf(Difficulty.BEGINNER));
     }
+
+
 
 
 }

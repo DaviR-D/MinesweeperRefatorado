@@ -161,9 +161,12 @@ public class Field extends StackPane {
         fieldNode.setOnMouseClicked(event -> handleEvent(event));
     }
 
+
+
     private void handleEvent(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
             handleNonBombField();
+
         }
     }
 
