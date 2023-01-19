@@ -18,6 +18,7 @@ public class Field extends StackPane {
     private final int yCoord;
     private boolean isEmpty;
     private boolean containsBomb;
+    private boolean isRevealed;
     private int fieldSize;
 
     private Rectangle fieldNode;
@@ -57,7 +58,6 @@ public class Field extends StackPane {
     }
 
     public String getBombCountAsString() {
-
         return bombCount.getText();
     }
 
@@ -67,6 +67,14 @@ public class Field extends StackPane {
 
     public boolean getIsEmpty() {
         return isEmpty;
+    }
+
+    public boolean getIsRevealed() {
+        return isRevealed;
+    }
+
+    public void setRevealed(boolean revealed) {
+        isRevealed = revealed;
     }
 
     private void setFieldFlags(boolean containsBomb) {
@@ -163,12 +171,16 @@ public class Field extends StackPane {
         revealClickedField();
         int i = getxCoord();
         int j = getyCoord();
-        GameLogic.revealSurroundingFields(i, j);
+        GameLogic.revealSurroundingFields(i, j, GameLogic.revealedFields);
     }
 
     public void revealClickedField() {
-        bombCount.setOpacity(1);
+        revealBombCount();
         System.out.println("empty " + xCoord + "," + yCoord);
+    }
+
+    public void revealBombCount() {
+        bombCount.setOpacity(1);
     }
 
     private void handleBombField() {

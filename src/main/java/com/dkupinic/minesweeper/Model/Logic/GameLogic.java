@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class GameLogic {
     private static final Field[][] grid = BoardManager.getGrid();
+    public static boolean[][] revealedFields = new boolean[grid.length][grid[0].length];
 
     public static void revealEmptyField(boolean isEmpty, Rectangle fieldNode) {
         if (isEmpty) {
@@ -32,38 +33,44 @@ public class GameLogic {
 
     /**
      * flood fill algorithm to reveal surrounding fields
-     * <a href="https://en.wikipedia.org/wiki/Flood_fill">Wikipedia</a>
      */
-    public static void revealSurroundingFields(int i, int j) {
-        boolean invalidxCoordinates = i < 0 || i >= grid.length;
-        boolean invalidyCoordinates = j < 0 || j >= grid[i].length;
+    public static void revealSurroundingFields(int x, int y, boolean[][] revealed) {
+        if (checkValidInputs(x, y, revealed)) return;
+        if (gridCoordinatesArentEmpty(x, y)) return;
 
-        if (invalidxCoordinates || invalidyCoordinates) {
-            return;
-        }
+        Field temporaryField = getTemporaryField(x, y);
+        if (checkFloodFillBorder(temporaryField)) return;
 
-        if (!grid[i][j].getIsEmpty()) {
-            return;
+        if (Objects.equals(temporaryField.getBombCountAsString(), "")) {
+            revealSurroundingFields(x - 1, y, revealed);
+            revealSurroundingFields(x + 1, y, revealed);
+            revealSurroundingFields(x, y - 1, revealed);
+            revealSurroundingFields(x, y + 1, revealed);
         }
-        Field tempF = grid[i][j];
-        revealEmptyField(tempF.getIsEmpty(), tempF.getFieldNode());
-
-        if (Objects.equals(tempF.getBombCountAsString(), "1")) {
-            return;
-        }
-        if (Objects.equals(tempF.getBombCountAsString(), "")) {
-            revealSurroundingFields(i - 1, j);
-            revealSurroundingFields(i + 1, j);
-            revealSurroundingFields(i , j - 1);
-            revealSurroundingFields(i , j + 1);
-        }
-
     }
 
+    private static Field getTemporaryField(int x, int y) {
+        Field temporaryField = grid[x][y];
+        revealEmptyField(temporaryField.getIsEmpty(), temporaryField.getFieldNode());
+        temporaryField.revealBombCount();
+        return temporaryField;
+    }
 
+    private static boolean checkValidInputs(int x, int y, boolean[][] revealed) {
+        if (x < 0 || x >= grid.length || y < 0 || y >= grid[x].length || revealed[x][y]) {
+            return true;
+        }
+        revealed[x][y] = true;
+        return false;
+    }
 
+    private static boolean checkFloodFillBorder(Field tempF) {
+        return tempF.getBombCountAsString().matches("\\d");
+    }
 
-
+    private static boolean gridCoordinatesArentEmpty(int x, int y) {
+        return !grid[x][y].getIsEmpty();
+    }
 
 
 }
