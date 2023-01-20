@@ -4,9 +4,6 @@ import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
-import com.dkupinic.minesweeper.Model.Field.Field;
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -14,18 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 public class MinesweeperController {
-    @FXML
     public Label timerLabel;
-    @FXML
-    private AnchorPane mainAnchor;
-    @FXML
-    private ChoiceBox<String> difficultyChoiceBox;
-    @FXML
-    private ImageView resetButton;
+    public AnchorPane mainAnchor;
+    public ChoiceBox<String> difficultyChoiceBox;
+    public ImageView resetButton;
 
     public static Pane pane;
 
@@ -37,10 +27,11 @@ public class MinesweeperController {
         timerLabel.setText(time);
     }
 
-    static MinesweeperController instance;
-    private MinesweeperController() {}
+    public static MinesweeperController instance;
+    public MinesweeperController() {
+        instance = this;
+    }
 
-    @FXML
     public void initialize() {
         initBoardPane();
         addDifficultyOptions();
@@ -57,8 +48,6 @@ public class MinesweeperController {
     @FXML
     private void onResetButtonClick() throws InvalidDifficultyException {
         onDifficultySelection();
-        Field[][] grid = BoardManager.getGrid();
-        Arrays.fill(grid, null);
     }
 
     private void clearPane() {
@@ -88,6 +77,10 @@ public class MinesweeperController {
 
         return instance;
     }
+
+
+
+
 
 
 

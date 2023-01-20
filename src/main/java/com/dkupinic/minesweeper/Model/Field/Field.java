@@ -1,5 +1,6 @@
 package com.dkupinic.minesweeper.Model.Field;
 
+import com.dkupinic.minesweeper.Controller.MinesweeperController;
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
@@ -191,7 +192,8 @@ public class Field extends StackPane {
     private void handleEvent(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
             handleNonBombField();
-
+            Timer t = new Timer();
+            t.startTimer(MinesweeperController.getInstance());
         }
         if (event.getButton() == MouseButton.SECONDARY) {
             //getChildren().add(flag);
