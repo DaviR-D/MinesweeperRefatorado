@@ -20,7 +20,7 @@ public class Field extends StackPane {
     private final int yCoord;
     private boolean isEmpty;
     private boolean containsBomb;
-    private boolean isRevealed;
+    private boolean flagRevealed;
     private int fieldSize;
 
     private Rectangle fieldNode;
@@ -75,13 +75,7 @@ public class Field extends StackPane {
         return isEmpty;
     }
 
-    public boolean getIsRevealed() {
-        return isRevealed;
-    }
 
-    public void setRevealed(boolean revealed) {
-        isRevealed = revealed;
-    }
 
     private void setFieldFlags(boolean containsBomb) {
         if (containsBomb) {
@@ -104,7 +98,7 @@ public class Field extends StackPane {
         setCorrectFlagImage(board);
 
         prepareBombs(board);
-        flag.setVisible(false); //!!
+        flag.setVisible(false);
         getChildren().addAll(fieldNode, bomb, bombCount, flag);
         offsetFields();
         handleOnClick();
@@ -187,29 +181,38 @@ public class Field extends StackPane {
         fieldNode.setOnMouseClicked(event -> handleEvent(event));
     }
 
-
-
     private void handleEvent(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
             handleNonBombField();
-            Timer t = new Timer();
-            t.startTimer(MinesweeperController.getInstance());
+            initTimer();
         }
         if (event.getButton() == MouseButton.SECONDARY) {
-            //getChildren().add(flag);
-            handleFlagField(); //!!
+            handleFlagField();
         }
-
     }
 
-    private void handleFlagField() { //!!
-        flag.setVisible(true); //!!
+    private static void initTimer() {
+        Timer time = new Timer();
+        if (!Timer.activeTimer) {
+            time.startTimer(MinesweeperController.getInstance());
+        }
     }
+
+    private void handleFlagField() {
+        if (!flagRevealed) {
+            flag.setVisible(true);
+            flagRevealed = true;
+        } else {
+            flag.setVisible(false);
+            flagRevealed = false;
+        }
+    }
+
     private void handleNonBombField() {
         revealClickedField();
-        int i = getxCoord();
-        int j = getyCoord();
-        GameLogic.revealSurroundingFields(i, j, GameLogic.revealedFields);
+        int x = getxCoord();
+        int y = getyCoord();
+        GameLogic.revealSurroundingFields(x, y, GameLogic.revealedFields);
     }
 
     public void revealClickedField() {
@@ -228,11 +231,8 @@ public class Field extends StackPane {
             //loose
         }
         if (event.getButton() == MouseButton.SECONDARY) {
-            //getChildren().add(flag);
-            handleFlagField(); //!!
+            handleFlagField();
         }
-
-
     }
 
     public void revealBomb() {
