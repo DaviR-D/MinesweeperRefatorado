@@ -32,14 +32,24 @@
          </image>
       </ImageView>
       <ChoiceBox fx:id="difficultyChoiceBox" layoutX="776.0" layoutY="177.0" onAction="#onDifficultySelection" prefWidth="150.0" styleClass="choiceBox" />
-      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="150.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="140.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/coin.png" />
          </image>
       </ImageView>
-      <Label fx:id="timerLabel" layoutX="84.0" layoutY="168.0" text="0,00" textFill="#e3c72d">
+      <Label fx:id="timerLabel" layoutX="79.0" layoutY="166.0" text="0,00" textFill="#e3c72d">
          <font>
-            <Font name="Consolas Bold" size="18.0" />
+            <Font name="Consolas" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="79.0" layoutY="371.0" text="0" textFill="#e3c72d">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="776.0" layoutY="372.0" text="0" textFill="#e3c72d">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>

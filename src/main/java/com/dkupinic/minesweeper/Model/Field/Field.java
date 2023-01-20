@@ -179,6 +179,7 @@ public class Field extends StackPane {
     private void onEmptyFieldClick() {
         bombCount.setOnMouseClicked(event -> handleEvent(event));
         fieldNode.setOnMouseClicked(event -> handleEvent(event));
+        flag.setOnMouseClicked(event -> handleFlagField());
     }
 
     private void handleEvent(MouseEvent event) {
