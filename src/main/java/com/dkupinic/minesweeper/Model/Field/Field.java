@@ -4,6 +4,7 @@ import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
+import com.dkupinic.minesweeper.Model.Timer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -102,7 +103,8 @@ public class Field extends StackPane {
         setCorrectFlagImage(board);
 
         prepareBombs(board);
-        getChildren().addAll(fieldNode, bomb, bombCount);
+        flag.setVisible(false); //!!
+        getChildren().addAll(fieldNode, bomb, bombCount, flag);
         offsetFields();
         handleOnClick();
     }
@@ -176,7 +178,7 @@ public class Field extends StackPane {
     }
 
     private void onBombFieldClick() {
-        bomb.setOnMouseClicked(event -> handleBombField());
+        bomb.setOnMouseClicked(event -> handleBombField(event));
     }
 
     private void onEmptyFieldClick() {
@@ -189,13 +191,18 @@ public class Field extends StackPane {
     private void handleEvent(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
             handleNonBombField();
+
         }
         if (event.getButton() == MouseButton.SECONDARY) {
-            getChildren().add(flag);
+            //getChildren().add(flag);
+            handleFlagField(); //!!
         }
 
     }
 
+    private void handleFlagField() { //!!
+        flag.setVisible(true); //!!
+    }
     private void handleNonBombField() {
         revealClickedField();
         int i = getxCoord();
@@ -212,10 +219,18 @@ public class Field extends StackPane {
         bombCount.setOpacity(1);
     }
 
-    private void handleBombField() {
-        revealBomb();
-        GameLogic.revealAllFields();
-        //lose
+    private void handleBombField(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            revealBomb();
+            GameLogic.revealAllFields();
+            //loose
+        }
+        if (event.getButton() == MouseButton.SECONDARY) {
+            //getChildren().add(flag);
+            handleFlagField(); //!!
+        }
+
+
     }
 
     public void revealBomb() {
