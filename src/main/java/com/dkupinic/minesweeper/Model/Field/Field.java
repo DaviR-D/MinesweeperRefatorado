@@ -5,7 +5,7 @@ import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
-import com.dkupinic.minesweeper.Model.Timer;
+import com.dkupinic.minesweeper.Model.Logic.Timer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -22,9 +22,10 @@ public class Field extends StackPane {
     private boolean containsBomb;
     private boolean flagRevealed;
     private int fieldSize;
+    private static int FLAG_COUNT = 99;
 
     private Rectangle fieldNode;
-    private ImageView flag;
+    public ImageView flag;
     private Image flagImage20px;
     private Image flagImage25px;
     private Image flagImage50px;
@@ -93,15 +94,17 @@ public class Field extends StackPane {
     private void prepareFields(Board board) {
         styleFields();
         styleBombCount();
-
-        initFlagImages();
-        setCorrectFlagImage(board);
-
+        styleFlags(board);
         prepareBombs(board);
-        flag.setVisible(false);
         getChildren().addAll(fieldNode, bomb, bombCount, flag);
         offsetFields();
         handleOnClick();
+    }
+
+    private void styleFlags(Board board) {
+        initFlagImages();
+        setCorrectFlagImage(board);
+        flag.setVisible(false);
     }
 
     private void offsetFields() {
@@ -173,12 +176,12 @@ public class Field extends StackPane {
     }
 
     private void onBombFieldClick() {
-        bomb.setOnMouseClicked(event -> handleBombField(event));
+        bomb.setOnMouseClicked(this::handleBombField);
     }
 
     private void onEmptyFieldClick() {
-        bombCount.setOnMouseClicked(event -> handleEvent(event));
-        fieldNode.setOnMouseClicked(event -> handleEvent(event));
+        bombCount.setOnMouseClicked(this::handleEvent);
+        fieldNode.setOnMouseClicked(this::handleEvent);
         flag.setOnMouseClicked(event -> handleFlagField());
     }
 
@@ -203,10 +206,17 @@ public class Field extends StackPane {
         if (!flagRevealed) {
             flag.setVisible(true);
             flagRevealed = true;
+            FLAG_COUNT--;
         } else {
             flag.setVisible(false);
             flagRevealed = false;
+            FLAG_COUNT++;
         }
+        updateFlagLabel(MinesweeperController.getInstance());
+    }
+
+    public static void updateFlagLabel(MinesweeperController controller) {
+        controller.flagLabel.setText(String.valueOf(FLAG_COUNT));
     }
 
     private void handleNonBombField() {
@@ -229,12 +239,15 @@ public class Field extends StackPane {
         if (event.getButton() == MouseButton.PRIMARY) {
             revealBomb();
             GameLogic.revealAllFields();
+            GameLogic.removeFlags();
             //loose
         }
         if (event.getButton() == MouseButton.SECONDARY) {
             handleFlagField();
         }
     }
+
+
 
     public void revealBomb() {
         bomb.setOpacity(1);

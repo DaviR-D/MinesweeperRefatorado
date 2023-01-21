@@ -181,7 +181,6 @@ public class BoardManager {
 
     /**
      * creates an empty list of neighbours and filled array of points
-     *
      * @param field field used for iterateNeighbours()
      * @return filled list of neighbours
      */
@@ -194,7 +193,6 @@ public class BoardManager {
 
     /**
      * iterates over pairs of points and adds valid neighbours to the neighbour list
-     *
      * @param neighbours the neighbour list
      * @param points     the pair array
      * @param field      the field to get the coordinates from
