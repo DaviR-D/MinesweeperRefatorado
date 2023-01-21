@@ -13,15 +13,12 @@ import javafx.scene.layout.Pane;
 
 public class MinesweeperController {
     public Label timerLabel;
+    public Label flagLabel;
     public AnchorPane mainAnchor;
     public ChoiceBox<String> difficultyChoiceBox;
     public ImageView resetButton;
 
     public static Pane pane;
-
-    public Label getTimerLabel() {
-        return timerLabel;
-    }
 
     public void setTimerLabel(String time) {
         timerLabel.setText(time);
