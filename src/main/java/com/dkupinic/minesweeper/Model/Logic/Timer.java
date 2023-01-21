@@ -1,4 +1,4 @@
-package com.dkupinic.minesweeper.Model;
+package com.dkupinic.minesweeper.Model.Logic;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
 import javafx.animation.AnimationTimer;
@@ -20,7 +20,7 @@ public class Timer {
                     timePlayed += (new Date().getTime() - lastFrame) / 1000.0;
                 }
                 lastFrame = new Date().getTime();
-                Platform.runLater(() -> controller.timerLabel.setText(String.format("%.2fs", timePlayed)));
+                Platform.runLater(() -> controller.setTimerLabel(String.format("%.2fs", timePlayed)));
             }
         };
         animationTimer.start();
