@@ -4,6 +4,7 @@ import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
+import com.dkupinic.minesweeper.Model.Logic.Timer;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import javafx.scene.layout.Pane;
 public class MinesweeperController {
     public Label timerLabel;
     public Label flagLabel;
+    public Label bombLabel;
     public AnchorPane mainAnchor;
     public ChoiceBox<String> difficultyChoiceBox;
     public ImageView resetButton;
@@ -37,6 +39,7 @@ public class MinesweeperController {
     @FXML
     private void onDifficultySelection() throws InvalidDifficultyException {
         clearPane();
+        Timer.setTimePlayed(0);
         Difficulty diffc = Difficulty.valueOf(difficultyChoiceBox.getValue());
         BoardManager builder = new BoardManager(diffc);
         builder.drawBoard();

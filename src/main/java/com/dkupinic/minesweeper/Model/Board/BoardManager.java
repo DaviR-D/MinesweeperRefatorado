@@ -39,6 +39,11 @@ public class BoardManager {
         grid = new Field[columns][rows];
         generateFields();
         drawNeighbours();
+        displayBombCount(MinesweeperController.getInstance());
+    }
+
+    private void displayBombCount(MinesweeperController controller) {
+        controller.bombLabel.setText(String.valueOf(Board.BOMB_COUNT));
     }
 
     /**

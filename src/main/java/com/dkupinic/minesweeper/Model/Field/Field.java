@@ -22,7 +22,7 @@ public class Field extends StackPane {
     private boolean containsBomb;
     private boolean flagRevealed;
     private int fieldSize;
-    private static int FLAG_COUNT = 99;
+    public static int FLAG_COUNT = 999;
 
     private Rectangle fieldNode;
     public ImageView flag;
@@ -34,8 +34,10 @@ public class Field extends StackPane {
     private Image bombImage25px;
     private Image bombImage50px;
     private Text bombCount;
+    static Timer time;
 
     public Field(int x, int y, boolean containsBomb, Board board) {
+        time = new Timer();
         this.xCoord = x;
         this.yCoord = y;
         setFieldFlags(containsBomb);
@@ -82,6 +84,7 @@ public class Field extends StackPane {
         if (containsBomb) {
             this.containsBomb = true;
             this.isEmpty = false;
+            Board.BOMB_COUNT++;
         } else {
             this.isEmpty = true;
         }
@@ -196,7 +199,6 @@ public class Field extends StackPane {
     }
 
     private static void initTimer() {
-        Timer time = new Timer();
         if (!Timer.activeTimer) {
             time.startTimer(MinesweeperController.getInstance());
         }
@@ -240,7 +242,8 @@ public class Field extends StackPane {
             revealBomb();
             GameLogic.revealAllFields();
             GameLogic.removeFlags();
-            //loose
+            GameLogic.resetFlagCount();
+            time.stopTimer();
         }
         if (event.getButton() == MouseButton.SECONDARY) {
             handleFlagField();

@@ -7,13 +7,14 @@ import javafx.application.Platform;
 import java.util.Date;
 
 public class Timer {
-    private float timePlayed = 0;
+    private static float timePlayed = 0;
     private long lastFrame = -1;
     public static boolean activeTimer;
+    AnimationTimer animationTimer;
 
     public void startTimer(MinesweeperController controller) {
         activeTimer = true;
-        AnimationTimer animationTimer = new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 if (lastFrame != -1) {
@@ -24,5 +25,13 @@ public class Timer {
             }
         };
         animationTimer.start();
+    }
+
+    public void stopTimer() {
+        animationTimer.stop();
+    }
+
+    public static void setTimePlayed(int value) {
+        timePlayed = value;
     }
 }

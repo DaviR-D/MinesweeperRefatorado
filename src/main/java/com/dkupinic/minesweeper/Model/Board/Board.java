@@ -7,6 +7,7 @@ public class Board {
     private int rows;
     private int size;
     private Difficulty currentDifficulty;
+    public static int BOMB_COUNT = 0;
 
     public Board(Difficulty difficulty) {
         if (checkValidDifficulty(difficulty)) setCurrentDifficulty(difficulty);

@@ -1,5 +1,6 @@
 package com.dkupinic.minesweeper.Model.Logic;
 
+import com.dkupinic.minesweeper.Controller.MinesweeperController;
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Field.Field;
@@ -78,6 +79,11 @@ public class GameLogic {
                 grid[x][y].flag.setVisible(false);
             }
         }
+    }
+
+    public static void resetFlagCount() {
+        Field.FLAG_COUNT = 99;
+        Field.updateFlagLabel(MinesweeperController.getInstance());
     }
 
 }
