@@ -72,5 +72,12 @@ public class GameLogic {
         return !grid[x][y].getIsEmpty();
     }
 
+    public static void removeFlags() {
+        for (int x = 0; x < grid.length; x++) {
+            for (int y = 0; y < grid.length; y++) {
+                grid[x][y].flag.setVisible(false);
+            }
+        }
+    }
 
 }
