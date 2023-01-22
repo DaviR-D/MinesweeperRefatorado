@@ -16,6 +16,7 @@ public class GameLogic {
     public static void revealEmptyField(boolean isEmpty, Rectangle fieldNode) {
         if (isEmpty) {
             fieldNode.setFill(Color.BLACK);
+            fieldNode.setDisable(true);
         }
     }
 
@@ -82,8 +83,22 @@ public class GameLogic {
     }
 
     public static void resetFlagCount() {
-        Field.FLAG_COUNT = 99;
+        Field.FLAG_COUNT = 999;
         Field.updateFlagLabel(MinesweeperController.getInstance());
+    }
+
+    public static boolean checkWin() {
+        int revealedTiles = 0;
+        int totalTiles = grid.length * grid[0].length;
+
+        for (int x = 0; x < grid.length; x++) {
+            for (int y = 0; y < grid.length; y++) {
+                if (grid[x][y].getFieldNode().isDisabled()) {
+                    revealedTiles++;
+                }
+            }
+        }
+        return revealedTiles == totalTiles - Board.BOMB_COUNT;
     }
 
 }
