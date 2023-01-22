@@ -1,9 +1,11 @@
 package com.dkupinic.minesweeper.Controller;
 
 import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
+import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
+import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -16,9 +18,11 @@ public class MinesweeperController {
     public Label timerLabel;
     public Label flagLabel;
     public Label bombLabel;
+    public Label winLabel;
     public AnchorPane mainAnchor;
     public ChoiceBox<String> difficultyChoiceBox;
     public ImageView resetButton;
+    public ImageView checkWinButton;
 
     public static Pane pane;
 
@@ -40,6 +44,7 @@ public class MinesweeperController {
     private void onDifficultySelection() throws InvalidDifficultyException {
         clearPane();
         Timer.setTimePlayed(0);
+        Board.BOMB_COUNT = 0;
         Difficulty diffc = Difficulty.valueOf(difficultyChoiceBox.getValue());
         BoardManager builder = new BoardManager(diffc);
         builder.drawBoard();
@@ -78,12 +83,14 @@ public class MinesweeperController {
         return instance;
     }
 
-
-
-
-
-
-
+    @FXML
+    private void onCheckWinButtonClicked() {
+        if (GameLogic.checkWin()) {
+            winLabel.setText("You won");
+        } else {
+            winLabel.setText("You lost");
+        }
+    }
 
 
 }
