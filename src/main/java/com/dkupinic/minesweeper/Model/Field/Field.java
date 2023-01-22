@@ -16,25 +16,25 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Field extends StackPane {
+    public static int FLAG_COUNT = 999;
+    private static Timer time;
     private final int xCoord;
     private final int yCoord;
     private boolean isEmpty;
     private boolean containsBomb;
     private boolean flagRevealed;
     private int fieldSize;
-    public static int FLAG_COUNT = 999;
 
-    private Rectangle fieldNode;
     public ImageView flag;
+    private ImageView bomb;
     private Image flagImage20px;
     private Image flagImage25px;
     private Image flagImage50px;
-    private ImageView bomb;
     private Image bombImage20px;
     private Image bombImage25px;
     private Image bombImage50px;
+    private Rectangle fieldNode;
     private Text bombCount;
-    static Timer time;
 
     public Field(int x, int y, boolean containsBomb, Board board) {
         time = new Timer();

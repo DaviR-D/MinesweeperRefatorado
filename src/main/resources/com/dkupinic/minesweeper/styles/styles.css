@@ -6,6 +6,14 @@
     -fx-image: url("../img/reset/reset_hover.png");
 }
 
+.checkWinButton {
+    -fx-image: url("../img/checkwin/checkwin.png");
+}
+
+.checkWinButton:hover {
+    -fx-image: url("../img/checkwin/checkwin_hover.png");
+}
+
 .choiceBox {
     -fx-background-color: #e3c72d;
     -fx-font-family: 'Consolas';
