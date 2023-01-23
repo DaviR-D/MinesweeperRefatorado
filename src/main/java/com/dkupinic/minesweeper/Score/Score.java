@@ -5,9 +5,13 @@ import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 
 public class Score {
     public static int score;
+    private static int baseScoreWin;
+    private static int baseScoreLoss;
     public static int scoreDifficultyMultiplier;
 
     public Score() {
+        baseScoreWin = 1;
+        baseScoreLoss = 1;
         score = 0;
         scoreDifficultyMultiplier = 1;
     }
@@ -16,12 +20,12 @@ public class Score {
         return score;
     }
 
-    public static void increaseScore(int score) {
-        Score.score += score * scoreDifficultyMultiplier;
+    public static void increaseScore() {
+        Score.score += baseScoreWin * scoreDifficultyMultiplier;
     }
 
-    public static void decreaseScore(int score) {
-        Score.score -= score * scoreDifficultyMultiplier;
+    public static void decreaseScore() {
+        Score.score -= baseScoreLoss * scoreDifficultyMultiplier;
     }
 
     public static double getScoreDifficultyMultiplier() {
@@ -34,6 +38,5 @@ public class Score {
             case ADVANCED -> scoreDifficultyMultiplier = 2;
             case ENTHUSIAST -> scoreDifficultyMultiplier = 3;
         }
-        throw new InvalidDifficultyException();
     }
 }

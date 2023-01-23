@@ -7,6 +7,7 @@ import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
+import com.dkupinic.minesweeper.Score.Score;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -19,6 +20,7 @@ public class MinesweeperController {
     public Label flagLabel;
     public Label bombLabel;
     public Label winLabel;
+    public Label scoreLabel;
     public AnchorPane mainAnchor;
     public ChoiceBox<String> difficultyChoiceBox;
     public ImageView resetButton;
@@ -46,6 +48,7 @@ public class MinesweeperController {
         Timer.setTimePlayed(0);
         Board.BOMB_COUNT = 0;
         Difficulty diffc = Difficulty.valueOf(difficultyChoiceBox.getValue());
+        Score.setScoreDifficultyMultiplier(diffc);
         BoardManager builder = new BoardManager(diffc);
         builder.drawBoard();
     }
@@ -87,9 +90,18 @@ public class MinesweeperController {
     private void onCheckWinButtonClicked() {
         if (GameLogic.checkWin()) {
             winLabel.setText("You won");
+            Score.increaseScore();
+            updateScore();
         } else {
             winLabel.setText("You lost");
+            Score.decreaseScore();
+            updateScore();
         }
+    }
+
+    @FXML
+    private void updateScore() {
+        scoreLabel.setText(String.valueOf(Score.getScore()));
     }
 
 
