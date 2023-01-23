@@ -1,3 +1,16 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 23.1.2023
+ *
+ * @details
+ * Class used to handle the score
+ */
+
 package com.dkupinic.minesweeper.Model.Score;
 
 import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
@@ -25,6 +38,11 @@ public class Score {
         return scoreDifficultyMultiplier;
     }
 
+    /**
+     * sets the score multiplier based on the difficulty
+     * @param difficulty the current difficulty
+     * @throws InvalidDifficultyException in an exceptional case where the choicebox returns a different difficulty than expected
+     */
     public static void setScoreDifficultyMultiplier(Difficulty difficulty) throws InvalidDifficultyException {
         switch (difficulty) {
             case BEGINNER -> scoreDifficultyMultiplier = 1;

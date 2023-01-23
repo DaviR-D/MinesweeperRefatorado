@@ -1,3 +1,16 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 23.1.2023
+ *
+ * @details
+ * Class used to handle the timer
+ */
+
 package com.dkupinic.minesweeper.Model.Logic;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
@@ -7,11 +20,15 @@ import javafx.application.Platform;
 import java.util.Date;
 
 public class Timer {
+    public static boolean activeTimer;
     private static float timePlayed = 0;
     private long lastFrame = -1;
-    public static boolean activeTimer;
-    AnimationTimer animationTimer;
+    private AnimationTimer animationTimer;
 
+    /**
+     * starts the timer and updates the timer label
+     * @param controller the MinesweeperController
+     */
     public void startTimer(MinesweeperController controller) {
         activeTimer = true;
         animationTimer = new AnimationTimer() {
@@ -27,10 +44,17 @@ public class Timer {
         animationTimer.start();
     }
 
+    /**
+     * stops the animation timer
+     */
     public void stopTimer() {
         animationTimer.stop();
     }
 
+    /**
+     * sets the time played to a passed value
+     * @param value
+     */
     public static void setTimePlayed(int value) {
         timePlayed = value;
     }

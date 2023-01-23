@@ -8,7 +8,7 @@
  * @date    : 23.1.2023
  *
  * @details
- * Class used to handle logic like recursively revealing the board
+ * Class used to handle everything related to each field in the minesweeper grid
  */
 
 package com.dkupinic.minesweeper.Model.Field;
@@ -262,8 +262,6 @@ public class Field extends StackPane {
             handleFlagField();
         }
     }
-
-
 
     public void revealBomb() {
         bomb.setOpacity(1);
