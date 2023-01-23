@@ -40,12 +40,7 @@ public class Field extends StackPane {
 
     public ImageView flag;
     private ImageView bomb;
-    private Image flagImage20px;
-    private Image flagImage25px;
-    private Image flagImage50px;
-    private Image bombImage20px;
-    private Image bombImage25px;
-    private Image bombImage50px;
+
     private Rectangle fieldNode;
     private Text bombCount;
 
@@ -91,8 +86,6 @@ public class Field extends StackPane {
         return isEmpty;
     }
 
-
-
     private void setFieldFlags(boolean containsBomb) {
         if (containsBomb) {
             this.containsBomb = true;
@@ -130,16 +123,10 @@ public class Field extends StackPane {
 
     private void initBombImages() {
         bomb = new ImageView();
-        bombImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
-        bombImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
-        bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
     }
 
     private void initFlagImages() {
         flag = new ImageView();
-        flagImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag20px.png");
-        flagImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag25px.png");
-        flagImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag50px.png");
     }
 
     private void prepareBombs(Board board) {
@@ -172,17 +159,17 @@ public class Field extends StackPane {
 
     private void setCorrectBombImage(Board board) {
         switch (board.getCurrentDifficulty()) {
-            case BEGINNER -> bomb.setImage(bombImage50px);
-            case ADVANCED -> bomb.setImage(bombImage25px);
-            case ENTHUSIAST -> bomb.setImage(bombImage20px);
+            case BEGINNER -> bomb.setImage(ImageProvider.getInstance().getBombImage50px());
+            case ADVANCED -> bomb.setImage(ImageProvider.getInstance().getBombImage25px());
+            case ENTHUSIAST -> bomb.setImage(ImageProvider.getInstance().getBombImage20px());
         }
     }
 
     private void setCorrectFlagImage(Board board) {
         switch (board.getCurrentDifficulty()) {
-            case BEGINNER -> flag.setImage(flagImage50px);
-            case ADVANCED -> flag.setImage(flagImage25px);
-            case ENTHUSIAST -> flag.setImage(flagImage20px);
+            case BEGINNER -> flag.setImage(ImageProvider.getInstance().getFlagImage50px());
+            case ADVANCED -> flag.setImage(ImageProvider.getInstance().getFlagImage25px());
+            case ENTHUSIAST -> flag.setImage(ImageProvider.getInstance().getFlagImage20px());
         }
     }
 
