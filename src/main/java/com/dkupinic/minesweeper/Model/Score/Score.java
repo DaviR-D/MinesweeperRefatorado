@@ -1,25 +1,24 @@
-package com.dkupinic.minesweeper.Score;
+package com.dkupinic.minesweeper.Model.Score;
 
 import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 
 public class Score {
     public static int score = 0;
-    private static int baseScoreWin = 1;
-    private static int baseScoreLoss = 1;
     public static int scoreDifficultyMultiplier = 1;
 
-
-    public static int getScore() {
-        return score;
-    }
-
     public static void increaseScore() {
+        int baseScoreWin = 1;
         Score.score += baseScoreWin * scoreDifficultyMultiplier;
     }
 
     public static void decreaseScore() {
+        int baseScoreLoss = 1;
         Score.score -= baseScoreLoss * scoreDifficultyMultiplier;
+    }
+
+    public static int getScore() {
+        return score;
     }
 
     public static double getScoreDifficultyMultiplier() {

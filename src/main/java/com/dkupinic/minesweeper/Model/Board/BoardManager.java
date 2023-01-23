@@ -1,3 +1,16 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 23.1.2023
+ *
+ * @details
+ * Class used to handle generation of board and checking neighbours and similiar
+ */
+
 package com.dkupinic.minesweeper.Model.Board;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;

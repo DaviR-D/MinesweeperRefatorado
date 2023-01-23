@@ -1,3 +1,16 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 23.1.2023
+ *
+ * @details
+ * Class containing the length and width of the board
+ */
+
 package com.dkupinic.minesweeper.Model.Board;
 
 public class BoardSize {

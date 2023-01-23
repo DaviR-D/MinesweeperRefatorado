@@ -1,13 +1,26 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 23.1.2023
+ *
+ * @details
+ * Class containing information about the minesweeper board
+ */
+
 package com.dkupinic.minesweeper.Model.Board;
 
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 
 public class Board {
+    private Difficulty currentDifficulty;
+    public static int BOMB_COUNT = 0;
     private int columns;
     private int rows;
     private int size;
-    private Difficulty currentDifficulty;
-    public static int BOMB_COUNT = 0;
 
     public Board(Difficulty difficulty) {
         if (checkValidDifficulty(difficulty)) setCurrentDifficulty(difficulty);
@@ -15,31 +28,9 @@ public class Board {
         setFieldSizes();
     }
 
-    private boolean checkValidDifficulty(Difficulty difficulty) {
-        switch (difficulty) {
-            case BEGINNER, ADVANCED, ENTHUSIAST -> {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void setFieldSizes() {
-        switch (getCurrentDifficulty()) {
-            case BEGINNER -> setSize(8);
-            case ADVANCED -> setSize(16);
-            case ENTHUSIAST -> setSize(20);
-        }
-        setColumns(size);
-        setRows(size);
-    }
-
-    //region getter setter
-
     public int getSize() {
         return size;
     }
-
     public void setSize(int size) {
         this.size = size;
     }
@@ -55,7 +46,6 @@ public class Board {
     public int getColumns() {
         return columns;
     }
-
     public void setColumns(int columns) {
         this.columns = columns;
     }
@@ -63,10 +53,34 @@ public class Board {
     public int getRows() {
         return rows;
     }
-
     public void setRows(int rows) {
         this.rows = rows;
     }
 
-    //endregion
+    /**
+     * checks if the difficulty is valid
+     * @param difficulty one of the 3 difficulties
+     * @return true or false
+     */
+    private boolean checkValidDifficulty(Difficulty difficulty) {
+        switch (difficulty) {
+            case BEGINNER, ADVANCED, ENTHUSIAST -> {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * sets the size of the board based on the currently selected difficulty
+     */
+    private void setFieldSizes() {
+        switch (getCurrentDifficulty()) {
+            case BEGINNER -> setSize(8);
+            case ADVANCED -> setSize(16);
+            case ENTHUSIAST -> setSize(20);
+        }
+        setColumns(size);
+        setRows(size);
+    }
 }
