@@ -1,3 +1,16 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 23.1.2023
+ *
+ * @details
+ * Class used to handle logic like recursively revealing the board
+ */
+
 package com.dkupinic.minesweeper.Model.Field;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
