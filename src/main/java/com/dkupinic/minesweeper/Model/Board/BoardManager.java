@@ -86,7 +86,7 @@ public class BoardManager {
     private double getMinePercentage() throws InvalidDifficultyException {
         switch (boardDifficulty) {
             case BEGINNER, ADVANCED -> {
-                return 0.10;
+                return 0.05;
             }
             case ENTHUSIAST -> {
                 return 0.11;
