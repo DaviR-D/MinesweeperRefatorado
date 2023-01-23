@@ -4,17 +4,11 @@ import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 
 public class Score {
-    public static int score;
-    private static int baseScoreWin;
-    private static int baseScoreLoss;
-    public static int scoreDifficultyMultiplier;
+    public static int score = 0;
+    private static int baseScoreWin = 1;
+    private static int baseScoreLoss = 1;
+    public static int scoreDifficultyMultiplier = 1;
 
-    public Score() {
-        baseScoreWin = 1;
-        baseScoreLoss = 1;
-        score = 0;
-        scoreDifficultyMultiplier = 1;
-    }
 
     public static int getScore() {
         return score;

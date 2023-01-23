@@ -101,7 +101,7 @@ public class MinesweeperController {
 
     @FXML
     public void updateScore() {
-        scoreLabel.setText(String.valueOf(Score.getScore()));
+        scoreLabel.setText(String.valueOf(Score.score));
     }
 
 
