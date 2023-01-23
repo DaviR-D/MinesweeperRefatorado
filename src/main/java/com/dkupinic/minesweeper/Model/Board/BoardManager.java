@@ -56,7 +56,7 @@ public class BoardManager {
     }
 
     private void displayBombCount(MinesweeperController controller) {
-        controller.bombLabel.setText(String.valueOf(Board.BOMB_COUNT));
+        controller.bombLabel.setText(String.valueOf(Board.bombCount));
     }
 
     /**
