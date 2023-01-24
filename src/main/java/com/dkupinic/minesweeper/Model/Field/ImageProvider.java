@@ -10,6 +10,9 @@ public class ImageProvider {
     private Image bombImage25px;
     private Image bombImage50px;
 
+    private static ImageProvider instance;
+    private ImageProvider() {}
+
     public Image getFlagImage20px() {
         if (flagImage20px == null) {
             flagImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag20px.png");
@@ -51,10 +54,7 @@ public class ImageProvider {
         }
         return bombImage50px;
     }
-
-    private static ImageProvider instance;
-    private ImageProvider() {}
-
+    
     public static ImageProvider getInstance() {
         if (instance == null) {
             instance = new ImageProvider();

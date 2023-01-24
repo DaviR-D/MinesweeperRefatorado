@@ -133,7 +133,7 @@ public class MinesweeperController {
      * reset bomb count to 0
      */
     private static void resetBombCount() {
-        Board.BOMB_COUNT = 0;
+        Board.bombCount = 0;
     }
 
     /**

@@ -19,7 +19,6 @@ import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -29,7 +28,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Field extends StackPane {
-    public static int FLAG_COUNT = 999;
+
     private static Timer time;
     private final int xCoord;
     private final int yCoord;
@@ -90,7 +89,7 @@ public class Field extends StackPane {
         if (containsBomb) {
             this.containsBomb = true;
             this.isEmpty = false;
-            Board.BOMB_COUNT++;
+            Board.bombCount++;
         } else {
             this.isEmpty = true;
         }
@@ -208,17 +207,17 @@ public class Field extends StackPane {
         if (!flagRevealed) {
             flag.setVisible(true);
             flagRevealed = true;
-            FLAG_COUNT--;
+            flagCount--;
         } else {
             flag.setVisible(false);
             flagRevealed = false;
-            FLAG_COUNT++;
+            flagCount++;
         }
         updateFlagLabel(MinesweeperController.getInstance());
     }
 
     public static void updateFlagLabel(MinesweeperController controller) {
-        controller.flagLabel.setText(String.valueOf(FLAG_COUNT));
+        controller.flagLabel.setText(String.valueOf(flagCount));
     }
 
     private void handleNonBombField() {
