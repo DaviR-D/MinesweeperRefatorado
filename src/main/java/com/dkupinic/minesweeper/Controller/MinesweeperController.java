@@ -43,6 +43,7 @@ public class MinesweeperController {
 
     public static Pane pane;
     public static MinesweeperController instance;
+    public boolean usedCheckWin;
 
     public void initialize() {
         initBoardPane();
@@ -63,6 +64,8 @@ public class MinesweeperController {
      */
     @FXML
     private void onDifficultySelection() throws InvalidDifficultyException {
+        checkWinButton.setDisable(false);
+        usedCheckWin = false;
         clearPane();
         resetTimePlayed();
         resetBombCount();
@@ -74,6 +77,9 @@ public class MinesweeperController {
      */
     @FXML
     private void onCheckWinButtonClicked() {
+        if (usedCheckWin) {
+            return;
+        }
         if (GameLogic.checkWin()) {
             winLabel.setText("You won");
             Score.increaseScore();
@@ -83,6 +89,9 @@ public class MinesweeperController {
             Score.decreaseScore();
             updateScore();
         }
+        usedCheckWin = true;
+        checkWinButton.setDisable(true);
+
     }
 
     /**
