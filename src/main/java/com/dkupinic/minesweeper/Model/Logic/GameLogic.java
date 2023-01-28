@@ -23,7 +23,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 public class GameLogic {
-    private static final Field[][] grid = BoardManager.getGrid();
+    public static Field[][] grid = BoardManager.getGrid();
     public static boolean[][] revealedFields = new boolean[grid.length][grid[0].length];
 
     /**
@@ -42,10 +42,8 @@ public class GameLogic {
      * reveal all fields on a loss for example
      */
     public static void revealAllFields() {
-        Board tempBoard = new Board(BoardManager.getBoardDifficulty());
-
-        for (int i = 0; i < tempBoard.getSize(); i++) {
-            for (int j = 0; j < tempBoard.getSize(); j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid.length; j++) {
                 Rectangle tempFieldNode = grid[i][j].getFieldNode();
                 tempFieldNode.setFill(Color.BLACK);
                 grid[i][j].revealClickedField();
@@ -134,7 +132,7 @@ public class GameLogic {
      * resets and updates the flag count
      */
     public static void resetFlagCount() {
-        Field.flagCount = 999;
+        Board.flagCount = 999;
         Field.updateFlagLabel(MinesweeperController.getInstance());
     }
 

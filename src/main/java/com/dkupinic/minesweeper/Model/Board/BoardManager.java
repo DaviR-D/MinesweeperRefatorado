@@ -44,12 +44,15 @@ public class BoardManager {
         return grid;
     }
 
+    public static void setGrid(Field[][] fieldGrid) {
+        grid = fieldGrid;
+    }
+
     /**
      * creates the board including the grid
      * @throws InvalidDifficultyException thrown when mine percentage can not be determined
      */
     public void drawBoard() throws InvalidDifficultyException {
-        grid = new Field[columns][rows];
         generateFields();
         drawNeighbours();
         displayBombCount(MinesweeperController.getInstance());
@@ -64,6 +67,8 @@ public class BoardManager {
      * @throws InvalidDifficultyException thrown when mine percentage can not be determined
      */
     private void generateFields() throws InvalidDifficultyException {
+        grid = new Field[columns][rows];
+
         for (int columnIterator = 0; columnIterator < columns; columnIterator++) {
             for (int rowIterator = 0; rowIterator < rows; rowIterator++) {
 

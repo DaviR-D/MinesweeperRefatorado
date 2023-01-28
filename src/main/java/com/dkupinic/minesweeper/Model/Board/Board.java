@@ -17,10 +17,10 @@ import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 
 public class Board {
     private Difficulty currentDifficulty;
-    public final int INITIAL_FLAGS = 999;
-    public final int INITIAL_BOMBS = 0;
-    public int flagCount = INITIAL_FLAGS;
-    public  int bombCount = INITIAL_BOMBS;
+    public static final int INITIAL_FLAGS = 999;
+    public static final int INITIAL_BOMBS = 0;
+    public static int flagCount = INITIAL_FLAGS;
+    public static int bombCount = INITIAL_BOMBS;
 
     private int columns;
     private int rows;

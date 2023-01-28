@@ -29,6 +29,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+import static com.dkupinic.minesweeper.Model.Field.Field.time;
+
 public class MinesweeperController {
     // FXML Variables
     public Label timerLabel;
@@ -70,6 +72,8 @@ public class MinesweeperController {
         resetTimePlayed();
         resetBombCount();
         generateNewBoard();
+        GameLogic.grid = BoardManager.getGrid();
+        GameLogic.revealedFields = new boolean[BoardManager.getGrid().length][BoardManager.getGrid()[0].length];
     }
 
     /**
@@ -91,7 +95,7 @@ public class MinesweeperController {
         }
         usedCheckWin = true;
         checkWinButton.setDisable(true);
-
+        time.stopTimer();
     }
 
     /**

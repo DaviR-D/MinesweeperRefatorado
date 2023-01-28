@@ -29,7 +29,7 @@ import javafx.scene.text.Text;
 
 public class Field extends StackPane {
 
-    private static Timer time;
+    public static Timer time;
     private final int xCoord;
     private final int yCoord;
     private boolean isEmpty;
@@ -207,17 +207,17 @@ public class Field extends StackPane {
         if (!flagRevealed) {
             flag.setVisible(true);
             flagRevealed = true;
-            flagCount--;
+            Board.flagCount--;
         } else {
             flag.setVisible(false);
             flagRevealed = false;
-            flagCount++;
+            Board.flagCount++;
         }
         updateFlagLabel(MinesweeperController.getInstance());
     }
 
     public static void updateFlagLabel(MinesweeperController controller) {
-        controller.flagLabel.setText(String.valueOf(flagCount));
+        controller.flagLabel.setText(String.valueOf(Board.flagCount));
     }
 
     private void handleNonBombField() {
