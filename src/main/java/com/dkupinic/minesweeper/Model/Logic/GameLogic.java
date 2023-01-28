@@ -67,6 +67,11 @@ public class GameLogic {
             revealSurroundingFields(x + 1, y, revealed);
             revealSurroundingFields(x, y - 1, revealed);
             revealSurroundingFields(x, y + 1, revealed);
+
+            revealSurroundingFields(x - 1, y + 1, revealed);
+            revealSurroundingFields(x + 1, y - 1, revealed);
+            revealSurroundingFields(x + 1, y + 1, revealed);
+            revealSurroundingFields(x - 1, y - 1, revealed);
         }
     }
 

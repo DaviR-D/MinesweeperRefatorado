@@ -107,7 +107,7 @@ public class BoardManager {
                 return 0.16;
             }
             case ENTHUSIAST -> {
-                return 0.21;
+                return 0.10;
             }
         }
         throw new InvalidDifficultyException();
