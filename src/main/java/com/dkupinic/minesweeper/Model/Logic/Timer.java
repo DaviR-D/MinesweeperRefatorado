@@ -14,6 +14,7 @@
 package com.dkupinic.minesweeper.Model.Logic;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
+import com.dkupinic.minesweeper.Model.Field.Field;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 
@@ -23,7 +24,7 @@ public class Timer {
     public static boolean activeTimer;
     private static float timePlayed = 0;
     private long lastFrame = -1;
-    private AnimationTimer animationTimer;
+    public static AnimationTimer animationTimer;
 
     /**
      * starts the timer and updates the timer label
@@ -48,7 +49,14 @@ public class Timer {
      * stops the animation timer
      */
     public void stopTimer() {
-        animationTimer.stop();
+        if (animationTimer != null) {
+            animationTimer.stop();
+        }
+
+        timePlayed = 0;
+        lastFrame = -1;
+
+
     }
 
     /**

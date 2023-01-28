@@ -19,6 +19,7 @@ import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
+import com.dkupinic.minesweeper.Model.Field.Field;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
 import com.dkupinic.minesweeper.Model.Score.Score;
@@ -28,6 +29,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+
+import java.util.Objects;
 
 import static com.dkupinic.minesweeper.Model.Field.Field.time;
 
@@ -77,6 +80,8 @@ public class MinesweeperController {
         generateNewBoard();
         GameLogic.grid = BoardManager.getGrid();
         GameLogic.revealedFields = new boolean[BoardManager.getGrid().length][BoardManager.getGrid()[0].length];
+        time.stopTimer();
+        Timer.activeTimer = false;
     }
 
     /**
