@@ -36,10 +36,11 @@ public class MinesweeperController {
     public Label timerLabel;
     public Label flagLabel;
     public Label bombLabel;
-    public Label winLabel;
     public Label scoreLabel;
     public AnchorPane mainAnchor;
     public ChoiceBox<String> difficultyChoiceBox;
+    public ImageView winImage;
+    public ImageView loseImage;
     public ImageView resetButton;
     public ImageView checkWinButton;
 
@@ -68,6 +69,8 @@ public class MinesweeperController {
     private void onDifficultySelection() throws InvalidDifficultyException {
         checkWinButton.setDisable(false);
         usedCheckWin = false;
+        winImage.setVisible(false);
+        loseImage.setVisible(false);
         clearPane();
         resetTimePlayed();
         resetBombCount();
@@ -85,12 +88,12 @@ public class MinesweeperController {
             return;
         }
         if (GameLogic.checkWin()) {
-            winLabel.setText("You won");
             Score.increaseScore();
+            winImage.setVisible(true);
             updateScore();
         } else {
-            winLabel.setText("You lost");
             Score.decreaseScore();
+            loseImage.setVisible(true);
             updateScore();
         }
         usedCheckWin = true;
