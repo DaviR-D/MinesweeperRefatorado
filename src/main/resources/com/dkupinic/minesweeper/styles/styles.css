@@ -6,6 +6,10 @@
     -fx-image: url("../img/reset/reset_hover.png");
 }
 
+.resetButton:disabled {
+    -fx-image: url("../img/reset/reset_disabled.png");
+}
+
 .checkWinButton {
     -fx-image: url("../img/checkwin/checkwin.png");
 }

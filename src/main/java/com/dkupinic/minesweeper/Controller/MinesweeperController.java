@@ -54,6 +54,9 @@ public class MinesweeperController {
     public void initialize() {
         initBoardPane();
         addDifficultyOptions();
+        if (!usedCheckWin) {
+            resetButton.setDisable(true);
+        }
     }
 
     public void setTimerLabel(String time) {
@@ -104,6 +107,8 @@ public class MinesweeperController {
         usedCheckWin = true;
         checkWinButton.setDisable(true);
         time.stopTimer();
+        resetButton.setDisable(false);
+
     }
 
     /**
@@ -121,6 +126,7 @@ public class MinesweeperController {
     @FXML
     private void onResetButtonClick() throws InvalidDifficultyException {
         onDifficultySelection();
+        resetButton.setDisable(true);
     }
 
     /**
