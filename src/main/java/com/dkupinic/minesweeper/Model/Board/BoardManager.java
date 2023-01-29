@@ -23,11 +23,11 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 public class BoardManager {
-    private final Board boardSize;
     private static Difficulty boardDifficulty;
+    private static Field[][] grid;
+    private final Board boardSize;
     private final int columns;
     private final int rows;
-    private static Field[][] grid;
 
     public BoardManager(Difficulty difficulty) {
         boardDifficulty = difficulty;
@@ -55,11 +55,14 @@ public class BoardManager {
     public void drawBoard() throws InvalidDifficultyException {
         generateFields();
         drawNeighbours();
-        displayBombCount(MinesweeperController.getInstance());
+        displayBombCount();
     }
 
-    private void displayBombCount(MinesweeperController controller) {
-        controller.bombLabel.setText(String.valueOf(Board.bombCount));
+    /**
+     * sets the value of bomb count label
+     */
+    private void displayBombCount() {
+        MinesweeperController.getInstance().bombLabel.setText(String.valueOf(Board.getBombCount()));
     }
 
     /**
@@ -69,11 +72,10 @@ public class BoardManager {
     private void generateFields() throws InvalidDifficultyException {
         grid = new Field[columns][rows];
 
-        for (int columnIterator = 0; columnIterator < columns; columnIterator++) {
-            for (int rowIterator = 0; rowIterator < rows; rowIterator++) {
-
-                Field field = new Field(columnIterator, rowIterator, generateBombProbalitity(getMinePercentage()), boardSize);
-                grid[columnIterator][rowIterator] = field;
+        for (int col = 0; col < columns; col++) {
+            for (int row = 0; row < rows; row++) {
+                Field field = new Field(col, row, generateBombProbalitity(getMinePercentage()), boardSize);
+                grid[col][row] = field;
                 addToPane(field);
             }
         }
@@ -84,7 +86,7 @@ public class BoardManager {
      * @param field field which contains nothing, a number or a bomb
      */
     private void addToPane(Field field) {
-        MinesweeperController.pane.getChildren().add(field);
+        MinesweeperController.getInstance().getPane().getChildren().add(field);
     }
 
     /**
@@ -103,11 +105,14 @@ public class BoardManager {
      */
     private double getMinePercentage() throws InvalidDifficultyException {
         switch (boardDifficulty) {
-            case BEGINNER, ADVANCED -> {
+            case BEGINNER -> {
                 return 0.16;
             }
+            case ADVANCED -> {
+                return 0.18;
+            }
             case ENTHUSIAST -> {
-                return 0.10;
+                return 0.21;
             }
         }
         throw new InvalidDifficultyException();
@@ -118,9 +123,9 @@ public class BoardManager {
      * based on how many mines are around the current field that is being iterated
      */
     private void drawNeighbours() {
-        for (int columnIterator = 0; columnIterator < columns; columnIterator++) {
-            for (int rowIterator = 0; rowIterator < rows; rowIterator++) {
-                Field field = grid[columnIterator][rowIterator];
+        for (int col = 0; col < columns; col++) {
+            for (int row = 0; row < rows; row++) {
+                Field field = grid[col][row];
                 checkIfBombField(field);
             }
         }
@@ -178,9 +183,7 @@ public class BoardManager {
      */
     private int increaseBombCount(ArrayList<Field> fields, int bombCount) {
         for (Field f : fields) {
-            if (f.getContainsBomb()) {
-                bombCount++;
-            }
+            if (f.getContainsBomb()) bombCount++;
         }
         return bombCount;
     }
@@ -223,11 +226,11 @@ public class BoardManager {
      */
     private ArrayList<Field> iterateNeighbours(ArrayList<Field> neighbours, int[] points, Field field) {
         for (int i = 0; i < points.length; i += 2) {
-            int dx = points[i];
-            int dy = points[i + 1];
+            int deltaX = points[i];
+            int deltaY = points[i + 1];
 
-            int newX = field.getxCoord() + dx;
-            int newY = field.getyCoord() + dy;
+            int newX = field.getxCoord() + deltaX;
+            int newY = field.getyCoord() + deltaY;
 
             if (validNeighbour(newX, newY)) {
                 neighbours.add(grid[newX][newY]);

@@ -19,7 +19,6 @@ import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
 import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
-import com.dkupinic.minesweeper.Model.Field.Field;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
 import com.dkupinic.minesweeper.Model.Score.Score;
@@ -29,8 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-
-import java.util.Objects;
 
 import static com.dkupinic.minesweeper.Model.Field.Field.time;
 
@@ -47,9 +44,9 @@ public class MinesweeperController {
     public ImageView resetButton;
     public ImageView checkWinButton;
 
-    public static Pane pane;
-    public static MinesweeperController instance;
-    public boolean usedCheckWin;
+    private static Pane pane;
+    private static MinesweeperController instance;
+    private boolean usedCheckWin;
 
     public void initialize() {
         initBoardPane();
@@ -59,12 +56,16 @@ public class MinesweeperController {
         }
     }
 
-    public void setTimerLabel(String time) {
-        timerLabel.setText(time);
-    }
-
     public MinesweeperController() {
         instance = this;
+    }
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setTimerLabel(String time) {
+        timerLabel.setText(time);
     }
 
     /**
@@ -73,18 +74,46 @@ public class MinesweeperController {
      */
     @FXML
     private void onDifficultySelection() throws InvalidDifficultyException {
-        checkWinButton.setDisable(false);
-        usedCheckWin = false;
-        winImage.setVisible(false);
-        loseImage.setVisible(false);
+        disableLabels();
         clearPane();
+        generateNewBoard();
+        cleanUpForNewRound();
+    }
+
+    /**
+     * resets properties to their defaults
+     */
+    private void cleanUpForNewRound() {
+        usedCheckWin = false;
         resetTimePlayed();
         resetBombCount();
-        generateNewBoard();
+        renewGrid();
+        stopTimer();
+    }
+
+    /**
+     * disables the check win button and makes the win/loss images invisible
+     */
+    private void disableLabels() {
+        checkWinButton.setDisable(false);
+        winImage.setVisible(false);
+        loseImage.setVisible(false);
+    }
+
+    /**
+     * stops the timer
+     */
+    private static void stopTimer() {
+        time.stopTimer();
+        Timer.setActiveTimer(false);
+    }
+
+    /**
+     * refreshes the variables of GameLogic so that It doesn't work with the old values
+     */
+    private static void renewGrid() {
         GameLogic.grid = BoardManager.getGrid();
         GameLogic.revealedFields = new boolean[BoardManager.getGrid().length][BoardManager.getGrid()[0].length];
-        time.stopTimer();
-        Timer.activeTimer = false;
     }
 
     /**
@@ -95,6 +124,15 @@ public class MinesweeperController {
         if (usedCheckWin) {
             return;
         }
+        handleGameResultLogic();
+        handleCheckWin();
+        time.stopTimer();
+    }
+
+    /**
+     * increases or decreases the players score based off if they won or not
+     */
+    private void handleGameResultLogic() {
         if (GameLogic.checkWin()) {
             Score.increaseScore();
             winImage.setVisible(true);
@@ -104,11 +142,15 @@ public class MinesweeperController {
             loseImage.setVisible(true);
             updateScore();
         }
+    }
+
+    /**
+     * disables and enables buttons related to rounds
+     */
+    private void handleCheckWin() {
         usedCheckWin = true;
         checkWinButton.setDisable(true);
-        time.stopTimer();
         resetButton.setDisable(false);
-
     }
 
     /**
@@ -116,7 +158,7 @@ public class MinesweeperController {
      */
     @FXML
     public void updateScore() {
-        scoreLabel.setText(String.valueOf(Score.score));
+        scoreLabel.setText(String.valueOf(Score.getScore()));
     }
 
     /**
@@ -151,7 +193,7 @@ public class MinesweeperController {
      * reset bomb count to 0
      */
     private static void resetBombCount() {
-        Board.bombCount = 0;
+        Board.setBombCount(0);
     }
 
     /**
@@ -179,7 +221,6 @@ public class MinesweeperController {
             String.valueOf(Difficulty.ADVANCED),
             String.valueOf(Difficulty.ENTHUSIAST)
         );
-
         difficultyChoiceBox.setValue(String.valueOf(Difficulty.BEGINNER));
     }
 
@@ -191,7 +232,6 @@ public class MinesweeperController {
         if (instance == null) {
             instance = new MinesweeperController();
         }
-
         return instance;
     }
 }

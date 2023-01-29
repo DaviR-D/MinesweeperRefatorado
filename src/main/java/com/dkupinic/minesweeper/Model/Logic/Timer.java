@@ -14,17 +14,28 @@
 package com.dkupinic.minesweeper.Model.Logic;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
-import com.dkupinic.minesweeper.Model.Field.Field;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 
 import java.util.Date;
 
 public class Timer {
-    public static boolean activeTimer;
+    private static AnimationTimer animationTimer;
+    private static boolean activeTimer;
     private static float timePlayed = 0;
     private long lastFrame = -1;
-    public static AnimationTimer animationTimer;
+
+    public static boolean getActiveTimer() {
+        return activeTimer;
+    }
+
+    public static void setActiveTimer(boolean bool) {
+        activeTimer = bool;
+    }
+
+    public static void setTimePlayed(int value) {
+        timePlayed = value;
+    }
 
     /**
      * starts the timer and updates the timer label
@@ -52,18 +63,7 @@ public class Timer {
         if (animationTimer != null) {
             animationTimer.stop();
         }
-
         timePlayed = 0;
         lastFrame = -1;
-
-
-    }
-
-    /**
-     * sets the time played to a passed value
-     * @param value
-     */
-    public static void setTimePlayed(int value) {
-        timePlayed = value;
     }
 }

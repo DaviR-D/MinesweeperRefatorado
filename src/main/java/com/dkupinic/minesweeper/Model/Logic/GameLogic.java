@@ -137,7 +137,7 @@ public class GameLogic {
      * resets and updates the flag count
      */
     public static void resetFlagCount() {
-        Board.flagCount = 999;
+        Board.setFlagCount(999);
         Field.updateFlagLabel(MinesweeperController.getInstance());
     }
 
@@ -156,6 +156,6 @@ public class GameLogic {
                 }
             }
         }
-        return revealedTiles == totalTiles - Board.bombCount;
+        return revealedTiles == totalTiles - Board.getBombCount();
     }
 }

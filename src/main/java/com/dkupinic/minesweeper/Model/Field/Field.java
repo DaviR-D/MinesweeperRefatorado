@@ -89,7 +89,7 @@ public class Field extends StackPane {
         if (containsBomb) {
             this.containsBomb = true;
             this.isEmpty = false;
-            Board.bombCount++;
+            Board.setBombCount(Board.getBombCount() + 1);
         } else {
             this.isEmpty = true;
         }
@@ -198,7 +198,7 @@ public class Field extends StackPane {
     }
 
     private static void initTimer() {
-        if (!Timer.activeTimer) {
+        if (!Timer.getActiveTimer()) {
             time.startTimer(MinesweeperController.getInstance());
         }
     }
@@ -207,17 +207,17 @@ public class Field extends StackPane {
         if (!flagRevealed) {
             flag.setVisible(true);
             flagRevealed = true;
-            Board.flagCount--;
+            Board.setFlagCount(Board.getFlagCount() - 1);
         } else {
             flag.setVisible(false);
             flagRevealed = false;
-            Board.flagCount++;
+            Board.setFlagCount(Board.getFlagCount() + 1);
         }
         updateFlagLabel(MinesweeperController.getInstance());
     }
 
     public static void updateFlagLabel(MinesweeperController controller) {
-        controller.flagLabel.setText(String.valueOf(Board.flagCount));
+        controller.flagLabel.setText(String.valueOf(Board.getFlagCount()));
     }
 
     private void handleNonBombField() {
