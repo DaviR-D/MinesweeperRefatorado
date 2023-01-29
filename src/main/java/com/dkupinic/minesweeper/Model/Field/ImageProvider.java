@@ -1,3 +1,16 @@
+/*-----------------------------------------------------------------------------
+ *              Hoehere Technische Bundeslehranstalt STEYR
+ *----------------------------------------------------------------------------*/
+/**
+ * Kurzbeschreibung
+ *
+ * @author  : Dino Kupinic
+ * @date    : 29.1.2023
+ *
+ * @details
+ * singleton that lazy loads bomb and flag images
+ */
+
 package com.dkupinic.minesweeper.Model.Field;
 
 import javafx.scene.image.Image;
@@ -59,7 +72,6 @@ public class ImageProvider {
         if (instance == null) {
             instance = new ImageProvider();
         }
-
         return instance;
     }
 }

@@ -5,7 +5,7 @@
  * Kurzbeschreibung
  *
  * @author  : Dino Kupinic
- * @date    : 23.1.2023
+ * @date    : 29.1.2023
  *
  * @details
  * Class used to handle logic like recursively revealing the board
@@ -23,8 +23,20 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 public class GameLogic {
-    public static Field[][] grid = BoardManager.getGrid();
-    public static boolean[][] revealedFields = new boolean[grid.length][grid[0].length];
+    private static Field[][] grid = BoardManager.getGrid();
+    private static boolean[][] revealedFields = new boolean[grid.length][grid[0].length];
+
+    public static void setGrid(Field[][] grid) {
+        GameLogic.grid = grid;
+    }
+
+    public static void setRevealedFields(boolean[][] revealedFields) {
+        GameLogic.revealedFields = revealedFields;
+    }
+
+    public static boolean[][] getRevealedFields() {
+        return revealedFields;
+    }
 
     /**
      * reveal a field that has not been revealed yet
@@ -63,16 +75,35 @@ public class GameLogic {
         if (checkFloodFillBorder(temporaryField)) return;
 
         if (Objects.equals(temporaryField.getBombCountAsString(), "")) {
-            revealSurroundingFields(x - 1, y, revealed);
-            revealSurroundingFields(x + 1, y, revealed);
-            revealSurroundingFields(x, y - 1, revealed);
-            revealSurroundingFields(x, y + 1, revealed);
-
-            revealSurroundingFields(x - 1, y + 1, revealed);
-            revealSurroundingFields(x + 1, y - 1, revealed);
-            revealSurroundingFields(x + 1, y + 1, revealed);
-            revealSurroundingFields(x - 1, y - 1, revealed);
+            revealNeighbours(x, y, revealed);
+            revealCorners(x, y, revealed);
         }
+    }
+
+    /**
+     * recursively reveals the neighbours of a field
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param revealed array which contains all revealed fields
+     */
+    private static void revealNeighbours(int x, int y, boolean[][] revealed) {
+        revealSurroundingFields(x - 1, y, revealed);
+        revealSurroundingFields(x + 1, y, revealed);
+        revealSurroundingFields(x, y - 1, revealed);
+        revealSurroundingFields(x, y + 1, revealed);
+    }
+
+    /**
+     * recursevely reveals the corners of a field
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param revealed array which contains all revealed fields
+     */
+    private static void revealCorners(int x, int y, boolean[][] revealed) {
+        revealSurroundingFields(x - 1, y + 1, revealed);
+        revealSurroundingFields(x + 1, y - 1, revealed);
+        revealSurroundingFields(x + 1, y + 1, revealed);
+        revealSurroundingFields(x - 1, y - 1, revealed);
     }
 
     /**
@@ -128,7 +159,7 @@ public class GameLogic {
     public static void removeFlags() {
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid.length; y++) {
-                grid[x][y].flag.setVisible(false);
+                grid[x][y].getFlag().setVisible(false);
             }
         }
     }
@@ -142,7 +173,8 @@ public class GameLogic {
     }
 
     /**
-     * checks if the player has won
+     * checks if the player has won, this is done by checking if the amount of revealed
+     * fields equals the total amount minus the amount of bombs
      * @return true or false
      */
     public static boolean checkWin() {

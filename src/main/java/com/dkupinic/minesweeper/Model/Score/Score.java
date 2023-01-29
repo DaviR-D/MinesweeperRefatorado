@@ -5,7 +5,7 @@
  * Kurzbeschreibung
  *
  * @author  : Dino Kupinic
- * @date    : 23.1.2023
+ * @date    : 29.1.2023
  *
  * @details
  * Class used to handle the score

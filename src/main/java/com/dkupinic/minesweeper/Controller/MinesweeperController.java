@@ -37,12 +37,12 @@ public class MinesweeperController {
     public Label flagLabel;
     public Label bombLabel;
     public Label scoreLabel;
-    public AnchorPane mainAnchor;
-    public ChoiceBox<String> difficultyChoiceBox;
     public ImageView winImage;
     public ImageView loseImage;
     public ImageView resetButton;
     public ImageView checkWinButton;
+    public AnchorPane mainAnchor;
+    public ChoiceBox<String> difficultyChoiceBox;
 
     private static Pane pane;
     private static MinesweeperController instance;
@@ -112,8 +112,8 @@ public class MinesweeperController {
      * refreshes the variables of GameLogic so that It doesn't work with the old values
      */
     private static void renewGrid() {
-        GameLogic.grid = BoardManager.getGrid();
-        GameLogic.revealedFields = new boolean[BoardManager.getGrid().length][BoardManager.getGrid()[0].length];
+        GameLogic.setGrid(BoardManager.getGrid());
+        GameLogic.setRevealedFields(new boolean[BoardManager.getGrid().length][BoardManager.getGrid()[0].length]);
     }
 
     /**

@@ -5,7 +5,10 @@
  * Kurzbeschreibung
  *
  * @author  : Dino Kupinic
- * @date    : 23.1.2023
+ * @date    : 29.1.2023
+ *
+ * @details
+ * entry point for the application
  */
 
 package com.dkupinic.minesweeper;
@@ -24,9 +27,11 @@ public class MinesweeperApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MinesweeperApplication.class.getResource("minesweeper-main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
+
         scene.getStylesheets().addAll(
                 Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("styles/styles.css")).toExternalForm())
         );
+
         stage.getIcons().add(new Image("file:src/main/resources/com/dkupinic/minesweeper/img/icon.png"));
         stage.setTitle("Minesweeper");
         stage.setResizable(false);

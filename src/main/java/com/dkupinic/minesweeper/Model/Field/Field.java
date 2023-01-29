@@ -28,7 +28,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Field extends StackPane {
-
     public static Timer time;
     private final int xCoord;
     private final int yCoord;
@@ -37,7 +36,7 @@ public class Field extends StackPane {
     private boolean flagRevealed;
     private int fieldSize;
 
-    public ImageView flag;
+    private ImageView flag;
     private ImageView bomb;
 
     private Rectangle fieldNode;
@@ -51,6 +50,10 @@ public class Field extends StackPane {
         initBombImages();
         calcFieldSize(board);
         prepareFields(board);
+    }
+
+    public ImageView getFlag() {
+        return flag;
     }
 
     public Rectangle getFieldNode() {
@@ -224,7 +227,7 @@ public class Field extends StackPane {
         revealClickedField();
         int x = getxCoord();
         int y = getyCoord();
-        GameLogic.revealSurroundingFields(x, y, GameLogic.revealedFields);
+        GameLogic.revealSurroundingFields(x, y, GameLogic.getRevealedFields());
     }
 
     public void revealClickedField() {
