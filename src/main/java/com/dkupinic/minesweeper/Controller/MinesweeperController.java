@@ -78,6 +78,7 @@ public class MinesweeperController {
     private void onDifficultySelection() throws InvalidDifficultyException {
         disableLabels();
         clearPane();
+        resetBombCount();
         generateNewBoard();
         cleanUpForNewRound();
     }
@@ -88,11 +89,6 @@ public class MinesweeperController {
     private void cleanUpForNewRound() {
         usedCheckWin = false;
         resetTimePlayed();
-        if (!firstMatch) {
-            resetBombCount();
-        }
-        firstMatch = false;
-        Board.setBombCount(Board.getBombCount());
         renewGrid();
         stopTimer();
     }

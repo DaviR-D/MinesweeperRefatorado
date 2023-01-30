@@ -330,7 +330,6 @@ public class Field extends StackPane {
      */
     private void handleBombField(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
-            GameLogic.checkWin();
             cleanUpForNextRound();
         }
         if (event.getButton() == MouseButton.SECONDARY) {
