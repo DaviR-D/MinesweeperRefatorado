@@ -58,7 +58,7 @@ public class GameLogic {
             for (int j = 0; j < grid.length; j++) {
                 Rectangle tempFieldNode = grid[i][j].getFieldNode();
                 tempFieldNode.setFill(Color.BLACK);
-                grid[i][j].revealClickedField();
+                grid[i][j].revealBombCount();
                 grid[i][j].revealBomb();
             }
         }
