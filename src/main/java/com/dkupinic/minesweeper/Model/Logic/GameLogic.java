@@ -183,11 +183,12 @@ public class GameLogic {
 
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid.length; y++) {
-                if (grid[x][y].getFieldNode().isDisabled()) {
+                if (grid[x][y].getFieldNode().isDisabled() || grid[x][y].getIsEmpty()) {
                     revealedTiles++;
                 }
             }
         }
+        System.out.println(Board.getBombCount());
         return revealedTiles == totalTiles - Board.getBombCount();
     }
 }
