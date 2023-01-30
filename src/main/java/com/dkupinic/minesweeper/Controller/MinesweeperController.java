@@ -48,6 +48,8 @@ public class MinesweeperController {
     private static MinesweeperController instance;
     private boolean usedCheckWin;
 
+    private boolean firstMatch = true;
+
     public void initialize() {
         initBoardPane();
         addDifficultyOptions();
@@ -86,7 +88,11 @@ public class MinesweeperController {
     private void cleanUpForNewRound() {
         usedCheckWin = false;
         resetTimePlayed();
-        //resetBombCount();
+        if (!firstMatch) {
+            resetBombCount();
+        }
+        firstMatch = false;
+        Board.setBombCount(Board.getBombCount());
         renewGrid();
         stopTimer();
     }

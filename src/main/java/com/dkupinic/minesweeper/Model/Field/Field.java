@@ -151,7 +151,7 @@ public class Field extends StackPane {
     }
 
     /**
-     * apply offset to fields so they don't stack on each other
+     * apply offset to fields, so they don't stack on each other
      */
     private void offsetFields() {
         setTranslateX(xCoord * fieldSize);
@@ -330,6 +330,7 @@ public class Field extends StackPane {
      */
     private void handleBombField(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
+            GameLogic.checkWin();
             cleanUpForNextRound();
         }
         if (event.getButton() == MouseButton.SECONDARY) {
