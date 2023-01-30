@@ -48,8 +48,6 @@ public class MinesweeperController {
     private static MinesweeperController instance;
     private boolean usedCheckWin;
 
-    private boolean firstMatch = true;
-
     public void initialize() {
         initBoardPane();
         addDifficultyOptions();
