@@ -86,7 +86,7 @@ public class MinesweeperController {
     private void cleanUpForNewRound() {
         usedCheckWin = false;
         resetTimePlayed();
-        resetBombCount();
+        //resetBombCount();
         renewGrid();
         stopTimer();
     }

@@ -325,13 +325,6 @@ public class Field extends StackPane {
     }
 
     /**
-     * sets the bombCount opacity to maximum
-     */
-    public void revealBombCount() {
-        bombCount.setOpacity(1);
-    }
-
-    /**
      * calls methods based on if the bomb was clicked or a flag was set on it
      * @param event mouse event
      */
@@ -360,5 +353,12 @@ public class Field extends StackPane {
      */
     public void revealBomb() {
         setBombOpacity(1);
+    }
+
+    /**
+     * sets the bombCount opacity to maximum
+     */
+    public void revealBombCount() {
+        bombCount.setOpacity(1);
     }
 }
