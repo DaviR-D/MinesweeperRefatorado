@@ -10,6 +10,11 @@
 - Highscore
 - Flags
 
+How to run:
+---
+Navigate to \out\artifacts\Minesweeper_jar and double-click Minesweeper.jar.
+You can also open it in an IDE.
+
 ### Class Diagram
 
 ---
