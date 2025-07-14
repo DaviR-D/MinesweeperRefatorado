@@ -1,69 +1,53 @@
-/*-----------------------------------------------------------------------------
- *              Hoehere Technische Bundeslehranstalt STEYR
- *----------------------------------------------------------------------------*/
-/**
- * Kurzbeschreibung
- *
- * @author  : Dino Kupinic
- * @date    : 23.1.2023
- *
- * @details
- * Class used to handle the timer
- */
-
+// Timer.java
 package com.dkupinic.minesweeper.Model.Logic;
 
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-
-import java.util.Date;
+import java.time.Duration;
 
 public class Timer {
     private static AnimationTimer animationTimer;
     private static boolean activeTimer;
-    private static float timePlayed = 0;
-    private long lastFrame = -1;
+    private static Duration elapsedTime = Duration.ZERO;
 
     public static boolean getActiveTimer() {
         return activeTimer;
     }
 
-    public static void setActiveTimer(boolean bool) {
-        activeTimer = bool;
+    public static void setActiveTimer(boolean active) {
+        activeTimer = active;
     }
 
-    public static void setTimePlayed(int value) {
-        timePlayed = value;
+    public static void setTimePlayed(int seconds) {
+        elapsedTime = Duration.ofSeconds(seconds);
     }
 
-    /**
-     * starts the timer and updates the timer label
-     * @param controller the MinesweeperController
-     */
     public void startTimer(MinesweeperController controller) {
         activeTimer = true;
         animationTimer = new AnimationTimer() {
+            private long lastFrame = -1;
+
             @Override
-            public void handle(long l) {
+            public void handle(long now) {
                 if (lastFrame != -1) {
-                    timePlayed += (new Date().getTime() - lastFrame) / 1000.0;
+                    Duration delta = Duration.ofNanos(now - lastFrame);
+                    elapsedTime = elapsedTime.plus(delta);
                 }
-                lastFrame = new Date().getTime();
-                Platform.runLater(() -> controller.setTimerLabel(String.format("%.2fs", timePlayed)));
+                lastFrame = now;
+                double seconds = elapsedTime.toMillis() / 1000.0;
+                String formattedTime = String.format("%.2fs", seconds);
+                Platform.runLater(() -> controller.setTimerLabel(formattedTime));
             }
         };
         animationTimer.start();
     }
 
-    /**
-     * stops the animation timer
-     */
     public void stopTimer() {
         if (animationTimer != null) {
             animationTimer.stop();
         }
-        timePlayed = 0;
-        lastFrame = -1;
+        elapsedTime = Duration.ZERO;
+        activeTimer = false;
     }
 }

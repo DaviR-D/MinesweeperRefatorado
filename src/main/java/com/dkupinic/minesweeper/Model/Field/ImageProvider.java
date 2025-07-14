@@ -1,77 +1,53 @@
-/*-----------------------------------------------------------------------------
- *              Hoehere Technische Bundeslehranstalt STEYR
- *----------------------------------------------------------------------------*/
-/**
- * Kurzbeschreibung
- *
- * @author  : Dino Kupinic
- * @date    : 29.1.2023
- *
- * @details
- * singleton that lazy loads bomb and flag images
- */
-
+// ImageProvider.java
 package com.dkupinic.minesweeper.Model.Field;
 
 import javafx.scene.image.Image;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ImageProvider {
-    private Image flagImage20px;
-    private Image flagImage25px;
-    private Image flagImage50px;
-    private Image bombImage20px;
-    private Image bombImage25px;
-    private Image bombImage50px;
-
     private static ImageProvider instance;
+    private final Map<String, Image> cache = new HashMap<>();
+
     private ImageProvider() {}
 
-    public Image getFlagImage20px() {
-        if (flagImage20px == null) {
-            flagImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag20px.png");
-        }
-        return flagImage20px;
-    }
-
-    public Image getFlagImage25px() {
-        if (flagImage25px == null) {
-            flagImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag25px.png");
-        }
-        return flagImage25px;
-    }
-
-    public Image getFlagImage50px() {
-        if (flagImage50px == null) {
-            flagImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag50px.png");
-        }
-        return flagImage50px;
-    }
-
-    public Image getBombImage20px() {
-        if (bombImage20px == null) {
-            bombImage20px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
-        }
-        return bombImage20px;
-    }
-
-    public Image getBombImage25px() {
-        if (bombImage25px == null) {
-            bombImage25px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
-        }
-        return bombImage25px;
-    }
-
-    public Image getBombImage50px() {
-        if (bombImage50px == null) {
-            bombImage50px = new Image("file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
-        }
-        return bombImage50px;
-    }
-    
     public static ImageProvider getInstance() {
         if (instance == null) {
             instance = new ImageProvider();
         }
         return instance;
     }
+
+    private Image loadImage(String path) {
+        return new Image(path);
+    }
+
+    private Image getCachedImage(String key, String path) {
+        return cache.computeIfAbsent(key, k -> loadImage(path));
+    }
+
+    public Image getFlagImage20px() {
+        return getCachedImage("flag20", "file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag20px.png");
+    }
+
+    public Image getFlagImage25px() {
+        return getCachedImage("flag25", "file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag25px.png");
+    }
+
+    public Image getFlagImage50px() {
+        return getCachedImage("flag50", "file:src/main/resources/com/dkupinic/minesweeper/img/flag/flag50px.png");
+    }
+
+    public Image getBombImage20px() {
+        return getCachedImage("bomb20", "file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb20px.png");
+    }
+
+    public Image getBombImage25px() {
+        return getCachedImage("bomb25", "file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb25px.png");
+    }
+
+    public Image getBombImage50px() {
+        return getCachedImage("bomb50", "file:src/main/resources/com/dkupinic/minesweeper/img/bomb/bomb50px.png");
+    }
 }
+

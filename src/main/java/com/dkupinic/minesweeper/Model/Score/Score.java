@@ -1,16 +1,4 @@
-/*-----------------------------------------------------------------------------
- *              Hoehere Technische Bundeslehranstalt STEYR
- *----------------------------------------------------------------------------*/
-/**
- * Kurzbeschreibung
- *
- * @author  : Dino Kupinic
- * @date    : 29.1.2023
- *
- * @details
- * Class used to handle the score
- */
-
+// Score.java
 package com.dkupinic.minesweeper.Model.Score;
 
 import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
@@ -19,31 +7,28 @@ import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 public class Score {
     private static int score = 0;
     private static int scoreDifficultyMultiplier = 1;
+    private static final int BASE_SCORE = 1;
 
     public static int getScore() {
         return score;
     }
 
     public static void increaseScore() {
-        int baseScoreWin = 1;
-        Score.score += baseScoreWin * scoreDifficultyMultiplier;
+        adjustScore(1);
     }
 
     public static void decreaseScore() {
-        int baseScoreLoss = 1;
-        Score.score -= baseScoreLoss * scoreDifficultyMultiplier;
+        adjustScore(-1);
     }
 
-    /**
-     * sets the score multiplier based on the difficulty
-     * @param difficulty the current difficulty
-     * @throws InvalidDifficultyException in an exceptional case where the choicebox returns a different difficulty than expected
-     */
+    private static void adjustScore(int sign) {
+        score += sign * BASE_SCORE * scoreDifficultyMultiplier;
+    }
+
     public static void setScoreDifficultyMultiplier(Difficulty difficulty) throws InvalidDifficultyException {
-        switch (difficulty) {
-            case BEGINNER -> scoreDifficultyMultiplier = 1;
-            case ADVANCED -> scoreDifficultyMultiplier = 2;
-            case ENTHUSIAST -> scoreDifficultyMultiplier = 3;
+        if (difficulty == null) {
+            throw new InvalidDifficultyException("Difficulty cannot be null");
         }
+        scoreDifficultyMultiplier = difficulty.getMultiplier();
     }
 }

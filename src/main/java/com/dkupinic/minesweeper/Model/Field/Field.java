@@ -16,7 +16,6 @@ package com.dkupinic.minesweeper.Model.Field;
 import com.dkupinic.minesweeper.Controller.MinesweeperController;
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
-import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
 import javafx.scene.image.ImageView;
@@ -28,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Field extends StackPane {
+     private static final int PANE_PIXEL_SIZE = 400;
     public static Timer time;
     private final int xCoord;
     private final int yCoord;
@@ -48,7 +48,7 @@ public class Field extends StackPane {
         time = new Timer();
         setCorrectValueOfFields(containsBomb);
         initBombImages();
-        calcFieldSize(board);
+        calcFieldSize(board);  // corrige aqui: usa o parâmetro board
         prepareFields(board);
     }
 
@@ -106,8 +106,8 @@ public class Field extends StackPane {
      * calculate the size of the fields
      * @param bd board object containing information about the amount of rows and columns
      */
-    private void calcFieldSize(Board bd) {
-        fieldSize = BoardSize.getLength() / bd.getRows();
+    private void calcFieldSize(Board board) {
+        this.fieldSize = PANE_PIXEL_SIZE / board.getRows();
     }
 
     /**

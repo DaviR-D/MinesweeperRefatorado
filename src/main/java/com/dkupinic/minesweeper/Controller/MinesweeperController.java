@@ -17,7 +17,6 @@ package com.dkupinic.minesweeper.Controller;
 import com.dkupinic.minesweeper.Exceptions.InvalidDifficultyException;
 import com.dkupinic.minesweeper.Model.Board.Board;
 import com.dkupinic.minesweeper.Model.Board.BoardManager;
-import com.dkupinic.minesweeper.Model.Board.BoardSize;
 import com.dkupinic.minesweeper.Model.Difficulty.Difficulty;
 import com.dkupinic.minesweeper.Model.Logic.GameLogic;
 import com.dkupinic.minesweeper.Model.Logic.Timer;
@@ -43,6 +42,8 @@ public class MinesweeperController {
     public ImageView checkWinButton;
     public AnchorPane mainAnchor;
     public ChoiceBox<String> difficultyChoiceBox;
+    private static final int PANE_PIXEL_SIZE = 400;
+
 
     private static Pane pane;
     private static MinesweeperController instance;
@@ -208,7 +209,7 @@ public class MinesweeperController {
      */
     private void initBoardPane() {
         pane = new Pane();
-        pane.setPrefSize(BoardSize.getLength(), BoardSize.getWidth());
+        pane.setPrefSize(PANE_PIXEL_SIZE, PANE_PIXEL_SIZE);
         mainAnchor.getChildren().add(pane);
     }
 

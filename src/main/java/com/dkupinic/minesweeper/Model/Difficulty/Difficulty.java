@@ -1,20 +1,18 @@
-/*-----------------------------------------------------------------------------
- *              Hoehere Technische Bundeslehranstalt STEYR
- *----------------------------------------------------------------------------*/
-/**
- * Kurzbeschreibung
- *
- * @author  : Dino Kupinic
- * @date    : 29.1.2023
- *
- * @details
- * Enum containing the 3 difficulties
- */
-
+// Difficulty.java
 package com.dkupinic.minesweeper.Model.Difficulty;
 
 public enum Difficulty {
-    BEGINNER,
-    ADVANCED,
-    ENTHUSIAST
+    BEGINNER(1),
+    ADVANCED(2),
+    ENTHUSIAST(3);
+
+    private final int multiplier;
+
+    Difficulty(int multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    public int getMultiplier() {
+        return multiplier;
+    }
 }
